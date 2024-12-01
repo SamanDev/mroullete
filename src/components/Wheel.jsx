@@ -47,7 +47,7 @@ const WheelContect = (prop) => {
             //const newPrizeNumber = Math.floor(Math.random() * _l.length);
         
         }
-        if (mustSpin && prop.status != "Spin") {
+        if (mustSpin && prop.status == "End") {
             setMustSpin(false);
         
         }
@@ -87,8 +87,8 @@ const WheelContect = (prop) => {
                 textDistance={85}
                 perpendicularText={true}
                 fontSize={15}
-                spinDuration={parseFloat((1 * timer) / 15).toFixed(2)}
-                startingOptionIndex={!mustSpinFF ? prop.last : -1}
+                spinDuration={parseFloat(((1 * timer) / 15)+.5).toFixed(2)}
+                startingOptionIndex={!mustSpinFF && !mustSpin ? prop.last : -1}
                 disableInitialAnimation={false}
                 mustStartSpinning={mustSpin}
                 prizeNumber={prizeNumber}
