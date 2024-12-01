@@ -381,24 +381,12 @@ const BlackjackGame = () => {
             if (_data.players.length == 0) {
                 
                 setGameTimer(15);
-                setTimeout(() => {
-                    $(".betButtons").hover(
-                        function () {
-                            // console.log('hi');
-
-                            chipHover.play();
-                        },
-                        function () {
-                            // play nothing when mouse leaves chip
-                        }
-                    );
-                  
-                }, 10);
+               
             }
 
 
             setGameDataLive(_data)
-            setGameData(_data);
+            //setGameData(_data);
            
         }
         setTimeout(() => {
@@ -407,42 +395,43 @@ const BlackjackGame = () => {
         }, 100);
         AppOrtion();
     }, [gamesData]);
-    useEffect(() => {
-       if(gameData?.status){
-        setTimeout(() => {
-            if(gameData.status=='End'){
-                for (const [key, value] of Object.entries(allBets)) {
-                            
-                            
-                    if(value.includes(''+segments[gameData.number]+'')|| value.includes(segments[gameData.number])){
-                        $('[data-bet='+key+']').addClass('item-selected')
-                    }
+    
+     useEffect(() => {
+      
+         setTimeout(() => {
+             if(gameData.status=='End'){
+                 for (const [key, value] of Object.entries(allBets)) {
+                             
+                             
+                     if(value.includes(''+segments[gameData.number]+'')|| value.includes(segments[gameData.number])){
+                         $('[data-bet='+key+']').addClass('item-selected')
+                     }
+                
+                   }
                
-                  }
-              
-                $('[data-bet='+segments[gameData?.number]+']').addClass('item-selected-num');
-                $('[data-bet="'+segments[gameData?.number]+'"]').addClass('item-selected-num');
-                $('[data-bet]').removeClass('noclick-nohide')
-                $('#betslist').stop().animate({scrollTop:500}, 5000, 'swing', function() { 
-                    $('#betslist').stop().animate({scrollTop:0}, 5000, 'swing', function() { 
-                        
-                     });
-                 });
-            }else{
-                $('.item-selected-num').removeClass('item-selected-num')
-
-                $('.item-selected').removeClass('item-selected')
-                $('#betslist').stop().animate({scrollTop:500}, 5000, 'swing', function() { 
-                    $('#betslist').stop().animate({scrollTop:0}, 5000, 'swing', function() { 
-                        
-                     });
-                 });
-            }
-            
-        }, 100);
-    }
-        // AppOrtion();
-    }, [gameData]);
+                 $('[data-bet='+segments[gameData?.number]+']').addClass('item-selected-num');
+                 $('[data-bet="'+segments[gameData?.number]+'"]').addClass('item-selected-num');
+                 $('[data-bet]').removeClass('noclick-nohide')
+                 $('#betslist').stop().animate({scrollTop:500}, 5000, 'swing', function() { 
+                     $('#betslist').stop().animate({scrollTop:0}, 5000, 'swing', function() { 
+                         
+                      });
+                  });
+             }else{
+                 $('.item-selected-num').removeClass('item-selected-num')
+ 
+                 $('.item-selected').removeClass('item-selected')
+                 $('#betslist').stop().animate({scrollTop:500}, 5000, 'swing', function() { 
+                     $('#betslist').stop().animate({scrollTop:0}, 5000, 'swing', function() { 
+                         
+                      });
+                  });
+             }
+             
+         }, 100);
+     
+         // AppOrtion();
+     }, [gameData?.status]);
     useEffect(() => {
         if (last) {
             setGameData(JSON.parse(localStorage.getItem(gameId)));
@@ -452,8 +441,9 @@ const BlackjackGame = () => {
         }
         setTimeout(() => {
             animateNum();
+            AppOrtion();
         }, 100);
-        AppOrtion();
+        
     }, [last, gameDataLive]);
     useEffect(() => {
         setTimeout(() => {
