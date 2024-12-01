@@ -562,7 +562,7 @@ const BlackjackGame = () => {
                     )}
                      {gameData.players.length > 0 && (
                         <div className="dealer-cards" id="betslist" style={{marginTop:1000,color:"#fff",height:300,overflow:'auto'}}>
-                            {gameData.players.sort((a, b) => (a.amount > b.amount ? -1 : a.x > b.x ? -1 : 1)).map(function (x, i) {
+                            {gameData.players.sort((a, b) => (a.amount > b.amount ? -1 : a.x > b.x ? -1 : a.win > b.win ? -1 : 1)).map(function (x, i) {
                                 if (i < 500) {
                                     let card = x.betId.id;
                                     return (
