@@ -47,6 +47,11 @@ const WheelContect = (prop) => {
             //const newPrizeNumber = Math.floor(Math.random() * _l.length);
         
         }
+        if (mustSpin && prop.status != "Spin") {
+            setMustSpin(false);
+        
+        }
+        
     }, [prop.status]);
     useEffect(() => {
         setTimer(prop.time);
@@ -89,7 +94,7 @@ const WheelContect = (prop) => {
                 prizeNumber={prizeNumber}
                 pointerProps={{ src: "/imgs/avatars/baby.svg" }}
                 onStopSpinning={() => {
-                    setMustSpin(false);
+                    //setMustSpin(false);
                 }}
             />
         </div>
