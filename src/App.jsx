@@ -266,7 +266,7 @@ const BlackjackGame = () => {
     const [gamesData, setGamesData] = useState([]);
     const [chip, setChip] = useState(50);
     const [lasts, setLasts] = useState([]);
-    const [gameData, setGameData] = useState(null); // Baraye zakhire JSON object
+    const [gameData, setGameData] = useState({"status":""}); // Baraye zakhire JSON object
     const [userData, setUserData] = useState(null);
     const [last, setLast] = useState(false);
     const [conn, setConn] = useState(true);
