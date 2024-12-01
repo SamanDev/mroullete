@@ -398,7 +398,6 @@ const BlackjackGame = () => {
     
      useEffect(() => {
       
-         setTimeout(() => {
              if(gameData.status=='End'){
                  for (const [key, value] of Object.entries(allBets)) {
                              
@@ -412,8 +411,8 @@ const BlackjackGame = () => {
                  $('[data-bet='+segments[gameData?.number]+']').addClass('item-selected-num');
                  $('[data-bet="'+segments[gameData?.number]+'"]').addClass('item-selected-num');
                  $('[data-bet]').removeClass('noclick-nohide')
-                 $('#betslist').stop().animate({scrollTop:500}, 5000, 'swing', function() { 
-                     $('#betslist').stop().animate({scrollTop:0}, 5000, 'swing', function() { 
+                 $('#betslist').stop().animate({scrollTop:500}, gameData?.players?.length?gameData?.players?.length:1*500, 'swing', function() { 
+                     $('#betslist').stop().animate({scrollTop:0}, gameData?.players?.length?gameData?.players?.length:1*500, 'swing', function() { 
                          
                       });
                   });
@@ -421,14 +420,13 @@ const BlackjackGame = () => {
                  $('.item-selected-num').removeClass('item-selected-num')
  
                  $('.item-selected').removeClass('item-selected')
-                 $('#betslist').stop().animate({scrollTop:500}, 5000, 'swing', function() { 
-                     $('#betslist').stop().animate({scrollTop:0}, 5000, 'swing', function() { 
+                 $('#betslist').stop().animate({scrollTop:500}, gameData?.players?.length?gameData?.players?.length:1*500, 'swing', function() { 
+                     $('#betslist').stop().animate({scrollTop:0}, gameData?.players?.length?gameData?.players?.length:1*500, 'swing', function() { 
                          
                       });
                   });
              }
-             
-         }, 100);
+        
      
          // AppOrtion();
      }, [gameData?.status]);
