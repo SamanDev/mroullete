@@ -398,7 +398,7 @@ const BlackjackGame = () => {
     
      useEffect(() => {
       
-             if(gameData.status=='End'){
+             if(gameData?.status=='End'){
                  for (const [key, value] of Object.entries(allBets)) {
                              
                              
