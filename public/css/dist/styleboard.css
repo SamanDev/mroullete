@@ -1,0 +1,84 @@
+
+ img.rotate {
+    animation: loadingspin 30s linear  infinite ;
+   
+}
+
+@keyframes loadingspin {
+
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+.roulette-table-container {
+    --red: red !important;
+    --black: #000;
+    --hover: rgb(16, 80, 140) !important;
+    
+}
+.bettable{
+    position: relative;
+      z-index: -1;
+      transform: scale(1);
+      transform-origin: top center;
+      height: 370px;
+      
+      left: 0;
+      right: 0;
+      top: -100px;
+      transition: all 2s ease;
+      
+     
+  }
+  .nochip.bettable{
+    top: -50px;
+      transform: scale(0.8);
+      
+  
+  }
+.zero-item {
+    background-color: green;
+}
+[data-bet]{
+    transition: all .5s ease !important;
+}
+.item-selected{
+    background: radial-gradient(#38833c, #1e421f);
+}
+
+.item-selected-num::before {
+    content: "✩";
+    position: absolute;
+    font-size: 33px;
+    left: 0px;
+    top: -2px;
+    color:gold;
+    z-index: 0;
+}
+.chip::after {
+    content: "25K";
+    position: absolute;
+    font-weight: 700;
+    font-family: "Oswald", sans-serif;
+    font-size: 10px;
+}
+.chip[style*="Purple"]::after {
+    content: "50K";
+}
+
+.chip[style*="Orange"]::after {
+    content: "100K";
+}
+.chip[style*="Red"]::after {
+    content: "250K";
+}
+.chip[style*="Blue"]::after {
+    content: "500K";
+}
+.chip[style*="Black"]::after {
+    content: "1M";
+}
