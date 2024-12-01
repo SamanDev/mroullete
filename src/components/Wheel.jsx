@@ -84,7 +84,7 @@ const WheelContect = (prop) => {
                 fontSize={15}
                 spinDuration={parseFloat((1 * timer) / 15).toFixed(2)}
                 startingOptionIndex={!mustSpinFF ? prop.last : -1}
-                disableInitialAnimation={true}
+                disableInitialAnimation={false}
                 mustStartSpinning={mustSpin}
                 prizeNumber={prizeNumber}
                 pointerProps={{ src: "/imgs/avatars/baby.svg" }}
