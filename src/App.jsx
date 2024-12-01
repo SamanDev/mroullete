@@ -25,8 +25,8 @@ _renge.push(_renge[1] * 2);
 _renge.push(_renge[1] * 5);
 _renge.push(_renge[1] * 10);
 _renge.push(_renge[1] * 20);
-const WEB_URL = process.env.REACT_APP_MODE === "production" ? `wss://${process.env.REACT_APP_DOMAIN_NAME}/` : `ws://${loc.hostname}:8088`;
-//const WEB_URL = `wss://mwheel.wheelofpersia.com/`;
+//const WEB_URL = process.env.REACT_APP_MODE === "production" ? `wss://${process.env.REACT_APP_DOMAIN_NAME}/` : `ws://${loc.hostname}:8088`;
+const WEB_URL = `wss://mroullete.wheelofpersia.com/`;
 // (A) LOCK SCREEN ORIENTATION
 const betAreas = [{ x: 2 }, { x: 4 }, { x: 8 }, { x: 10 }, { x: 20 }, { x: 25 }];
 const segments = ["0", 26, 3, 35, 12, 28, 7, 29, 18, 22, 9, 31, 14, 20, 1, 33, 16, 24, "00", 5, 10, 23, 8, 30, 11, 36, 13, 27, 6, 34, 17, 25, 2, 21, 4, 19, 15, 32];
