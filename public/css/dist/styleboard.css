@@ -60,12 +60,17 @@
     color:gold;
     z-index: 0;
 }
+.chip.user {
+    transform:scale(.7) translateX(-30px)}
 .chip::after {
     content: "25K";
     position: absolute;
     font-weight: 700;
     font-family: "Oswald", sans-serif;
     font-size: 10px;
+}
+.chip {
+    color: #fff !important;
 }
 .chip[style*="Purple"]::after {
     content: "50K";
