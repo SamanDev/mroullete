@@ -38,7 +38,7 @@ const WheelContect = (prop) => {
     const [timer, setTimer] = useState(prop.time);
 
     useEffect(() => {
-        if (!mustSpin && prop.status == "Spin") {
+        if (mustSpin==false && prop.status == "Spin") {
             const newPrizeNumber = prop.number;
             setMustSpinFF(true);
             setPrizeNumber(newPrizeNumber);
@@ -48,7 +48,7 @@ const WheelContect = (prop) => {
         
         }
         if (mustSpin && prop.status == "End") {
-            setMustSpin(false);
+            //setMustSpin(false);
         
         }
         
@@ -87,14 +87,15 @@ const WheelContect = (prop) => {
                 textDistance={85}
                 perpendicularText={true}
                 fontSize={15}
-                spinDuration={parseFloat((1 * timer) / 15).toFixed(2)}
+                spinDuration={parseFloat((timer) / 15).toFixed(2)}
                 startingOptionIndex={!mustSpinFF ? prop.last : -1}
                 disableInitialAnimation={false}
                 mustStartSpinning={mustSpin}
                 prizeNumber={prizeNumber}
                 pointerProps={{ src: "/imgs/avatars/baby.svg" }}
                 onStopSpinning={() => {
-                    //setMustSpin(false);
+                    setMustSpin(false);
+                    setMustSpinFF(false);
                 }}
             />
         </div>

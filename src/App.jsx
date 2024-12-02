@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 
 import { Howl } from "howler";
-import { Icon, Popup } from "semantic-ui-react";
 import $ from "jquery";
 import Info from "./components/Info";
+import Loaderr from "./components/Loader";
 import TableBet from "./components/Table";
 
 import Wheel from "./components/Wheel";
-import Loaderr from "./components/Loader";
+
+
 
 let _auth = null;
 const loc = new URL(window.location);
@@ -28,7 +29,6 @@ _renge.push(_renge[1] * 20);
 //const WEB_URL = process.env.REACT_APP_MODE === "production" ? `wss://${process.env.REACT_APP_DOMAIN_NAME}/` : `ws://${loc.hostname}:8088`;
 const WEB_URL = `wss://mroullete.wheelofpersia.com/`;
 // (A) LOCK SCREEN ORIENTATION
-const betAreas = [{ x: 2 }, { x: 4 }, { x: 8 }, { x: 10 }, { x: 20 }, { x: 25 }];
 const segments = ["0", 26, 3, 35, 12, 28, 7, 29, 18, 22, 9, 31, 14, 20, 1, 33, 16, 24, "00", 5, 10, 23, 8, 30, 11, 36, 13, 27, 6, 34, 17, 25, 2, 21, 4, 19, 15, 32];
 const REDSeg = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
 const BLACKSeg = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35];
@@ -329,11 +329,9 @@ const BlackjackGame = () => {
                 setGamesData(data.games);
 
                 if (data.last) {
-                    setTimeout(() => {
-                        let _data = data.games[0];
-                        localStorage.setItem(data.gameId, JSON.stringify(_data));
-                    }, 3000);
-                    setGameTimer(15);
+                    let _data = data.games[0];
+                    localStorage.setItem(data.gameId, JSON.stringify(_data));
+                    //setGameTimer(15);
                 }
                 // Update kardan state
             }
@@ -368,9 +366,6 @@ const BlackjackGame = () => {
         };
 
         // Cleanup websocket dar zamane unmount kardan component
-        return () => {
-            // socket.close();
-        };
     }, []);
 
     useEffect(() => {
@@ -391,6 +386,7 @@ const BlackjackGame = () => {
     }, [gamesData]);
     useEffect(() => {
         // console.log("gameId",gameId)
+        $(".chip.user").remove();
         if (last) {
             $("body").css("background", "radial-gradient(#000000, #262a2b)");
         } else {
@@ -437,39 +433,54 @@ const BlackjackGame = () => {
         // AppOrtion();
     }, [gameData?.status]);
     useEffect(() => {
-        if (last && gameDataLive?.status != "Spin") {
+        if (last && gameDataLive?.status == "Done") {
             setGameData(JSON.parse(localStorage.getItem(gameId)));
         } else {
-            setGameData(gameDataLive);
             if (gameDataLive?.players) {
-                gameDataLive.players.map(function (x, i) {
-                    
-    
-                    var blnIs = $("[data-bet=" + x.betId.id + ']').find('[username="' + x.nickname + '"]').length;
-                    if (blnIs == 0) {
-                        var cIcon = getChipIcon(x.amount);
-                    var cCount = $("[data-bet=" + x.betId.id + "]").find(".user").length+i;
-                        $("[data-bet=" + x.betId.id + "] > div").append('<div class="chip center user animate__animated animate__zoomInDown" username="' + x.nickname + '" style="animation-delay: '+i*.05+'s;transform: scale(0.7) translate(-' + ((cCount-i) * 5 + 30) + 'px,' + ((cCount-i) * 5) + 'px);background-image: url(&quot;/imgs/chips/Casino_Chip_' + cIcon + '.svg&quot;);"></div>');
-                    }
-                });
-                if (gameDataLive?.players.length==0) {
+                if (gameDataLive?.players.length == 0) {
                     $(".chip.user").remove();
                 }
-            } 
+            }
+            setGameData(gameDataLive);
+            
         }
         setTimeout(() => {
             animateNum();
             AppOrtion();
         }, 100);
     }, [last, gameDataLive]);
+
     useEffect(() => {
-        
         if (gameData?.players) {
             if (gameData?.status == "End") {
                 setListBets(gameData?.players.sort((a, b) => (a.win > b.win ? -1 : 1)));
             } else {
                 setListBets(gameData?.players.sort((a, b) => (a.amount > b.amount ? -1 : 1)));
             }
+            gameData.players.map(function (x, i) {
+                if (x.nickname != userData?.nickname) {
+                    if ($("[data-bet=" + x.betId.id + "]").length > 0) {
+                        var blnIs = $("[data-bet=" + x.betId.id + "]").find('[username="' + x.nickname + '"]').length;
+                        if (blnIs == 0) {
+                            var cIcon = getChipIcon(x.amount);
+                            var cCount = $("[data-bet=" + x.betId.id + "]").find(".user").length + i;
+                            if (x.betId.payload.length == 1) {
+                                $("[data-bet=" + x.betId.id + "] > div.value").append('<div class="chip center user animate__animated animate__zoomInDown" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.05 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 30) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                            } else {
+                                $("[data-bet=" + x.betId.id + "] > div").append('<div class="chip center user animate__animated animate__zoomInDown" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.05 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 30) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                            }
+                        }
+                    } else {
+                        var blnIs = $("[data-highlight=" + x.betId.id + "]").find('[username="' + x.nickname + '"]').length;
+                        if (blnIs == 0) {
+                            var cIcon = getChipIcon(x.amount);
+                            var cCount = $("[data-highlight=" + x.betId.id + "]").find(".user").length + i;
+
+                            $("[data-highlight=" + x.betId.id + "]").append('<div class="chip center user animate__animated animate__zoomInDown" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.05 : 0.001) + "s;transform: scale(0.5) translate(-" + ((cCount - i) * 5 + 10) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                        }
+                    }
+                }
+            });
         }
     }, [gameData]);
     useEffect(() => {
@@ -521,7 +532,7 @@ const BlackjackGame = () => {
                         Your Wins
                         <div id="total-bet" className="counter" data-count={_totalWin}></div>
                     </div>
-                    {localStorage.getItem(gameId) && gameDataLive.status != "Spin" && (
+                    {localStorage.getItem(gameId) && gameDataLive.status == "Done" && (
                         <div
                             className="balance-bet"
                             onMouseEnter={() => {
@@ -619,8 +630,8 @@ const BlackjackGame = () => {
                         </div>
                     )}
                 </div>
-                <Wheel number={gameDataLive.number} status={gameDataLive.status} last={lasts[0]} gameTimer={gameTimer} time={gameDataLive.startTimer} />
 
+                <Wheel number={gameDataLive.number} status={gameDataLive.status} last={lasts[0]} gameTimer={gameTimer} time={gameDataLive.startTimer} />
                 <div className={gameTimer < 2 || chip * 1000 > userData.balance ? "nochip bettable" : "bettable"}>
                     <TableBet handleBets={handleBets} bets={doplayers(gameData.players)} />
                 </div>
