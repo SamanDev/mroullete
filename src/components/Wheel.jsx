@@ -47,10 +47,7 @@ const WheelContect = (prop) => {
             //const newPrizeNumber = Math.floor(Math.random() * _l.length);
         
         }
-        if (mustSpin && prop.status == "End") {
-            //setMustSpin(false);
-        
-        }
+      
         
     }, [prop.status]);
     useEffect(() => {

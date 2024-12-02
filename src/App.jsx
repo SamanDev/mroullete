@@ -476,7 +476,7 @@ const BlackjackGame = () => {
                             var cIcon = getChipIcon(x.amount);
                             var cCount = $("[data-highlight=" + x.betId.id + "]").find(".user").length + i;
 
-                            $("[data-highlight=" + x.betId.id + "]").append('<div class="chip center user animate__animated animate__zoomInDown" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.05 : 0.001) + "s;transform: scale(0.5) translate(-" + ((cCount - i) * 5 + 10) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                            $("[data-highlight=" + x.betId.id + "]").append('<div class="chip center user animate__animated animate__zoomInDown" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.05 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 10) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
                         }
                     }
                 }
