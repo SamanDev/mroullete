@@ -22,7 +22,7 @@
 }
 .bettable{
     position: relative;
-      z-index: -1;
+      z-index: 1;
       transform: scale(1);
       transform-origin: top center;
       height: 370px;
@@ -37,7 +37,7 @@
   .nochip.bettable{
     top: -50px;
       transform: scale(0.8);
-      
+      opacity: .8;
   
   }
 .zero-item {
@@ -47,7 +47,8 @@
     transition: all .5s ease !important;
 }
 .item-selected{
-    background: radial-gradient(#38833c, #1e421f);
+    background: linear-gradient(#c9b337, #c3bb70);
+    color:#000 !important;
 }
 
 .item-selected-num::before {

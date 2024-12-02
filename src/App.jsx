@@ -258,7 +258,7 @@ let timerRunningOut = new Howl({
 // let youLose = new Howl({
 //   src: ['/sounds/you_lose.mp3']
 // });
-$("body").css("background", "radial-gradient(#833838, #421e1e)");
+
 
 
 const BlackjackGame = () => {
@@ -272,7 +272,7 @@ const BlackjackGame = () => {
     const [conn, setConn] = useState(true);
     const [gameId, setGameId] = useState("Roulette01");
     const [gameTimer, setGameTimer] = useState(-1);
-    const [online, setOnline] = useState(0);
+    const [listBets, setListBets] = useState([]);
     const [gameDataLive, setGameDataLive] = useState(null);
     const checkBets = (seat, username) => {
         let check = true;
@@ -330,11 +330,13 @@ const BlackjackGame = () => {
             //console.log("Game data received: ", data);
             if (data.method == "tables") {
                 setGamesData(data.games);
+               
                 if (data.last) {
                     setTimeout(() => {
                         let _data = data.games[0];
                         localStorage.setItem(data.gameId, JSON.stringify(_data));
                     }, 3000);
+                    setGameTimer(15);
                 }
                 // Update kardan state
             }
@@ -391,11 +393,18 @@ const BlackjackGame = () => {
         }
         setTimeout(() => {
             animateNum();
-            
+            AppOrtion();
         }, 100);
-        AppOrtion();
+       
     }, [gamesData]);
-    
+    useEffect(() => {
+        // console.log("gameId",gameId)
+        if (last) {
+            $("body").css("background", "radial-gradient(#000000, #262a2b)");
+        } else {
+            $("body").css("background", "radial-gradient(#833838, #421e1e)");
+        }
+    }, [last]);
      useEffect(() => {
       
              if(gameData?.status=='End'){
@@ -411,31 +420,35 @@ const BlackjackGame = () => {
                  $('[data-bet='+segments[gameData?.number]+']').addClass('item-selected-num');
                  $('[data-bet="'+segments[gameData?.number]+'"]').addClass('item-selected-num');
                  $('[data-bet]').removeClass('noclick-nohide')
-                 $('#betslist').stop().animate({scrollTop:500}, gameData?.players?.length?gameData?.players?.length:1*500, 'swing', function() { 
-                     $('#betslist').stop().animate({scrollTop:0}, gameData?.players?.length?gameData?.players?.length:1*500, 'swing', function() { 
-                         
-                      });
-                  });
+                 setTimeout(() => {
+                    $('#betslist').stop().animate({scrollTop:500}, (gameData?.players?.length>0?gameData?.players?.length:1)*500, 'swing', function() { 
+                        $('#betslist').stop().animate({scrollTop:0}, (gameData?.players?.length>0?gameData?.players?.length:1)*500, 'swing', function() { 
+                            
+                         });
+                     });
+                }, 2000);
+                 
              }else{
                  $('.item-selected-num').removeClass('item-selected-num')
  
                  $('.item-selected').removeClass('item-selected')
-                 $('#betslist').stop().animate({scrollTop:500}, gameData?.players?.length?gameData?.players?.length:1*500, 'swing', function() { 
-                     $('#betslist').stop().animate({scrollTop:0}, gameData?.players?.length?gameData?.players?.length:1*500, 'swing', function() { 
-                         
-                      });
-                  });
+             
+             }
+             if(gameData?.status=='Spin'){
+                setLast(false)
              }
         
      
          // AppOrtion();
      }, [gameData?.status]);
-    useEffect(() => {
-        if (last) {
+     useEffect(() => {
+        if (last && gameDataLive?.status!='Spin') {
             setGameData(JSON.parse(localStorage.getItem(gameId)));
             
         } else {
             setGameData(gameDataLive);
+           
+            
         }
         setTimeout(() => {
             animateNum();
@@ -443,6 +456,18 @@ const BlackjackGame = () => {
         }, 100);
         
     }, [last, gameDataLive]);
+    useEffect(() => {
+        
+            if(gameData?.players){
+                if(gameData?.status=='End'){
+                    setListBets(gameData?.players.sort((a, b) => (a.win > b.win ? -1 : 1)))
+                }else{
+                    setListBets(gameData?.players.sort((a, b) => (a.amount > b.amount ? -1 : 1)))
+                }
+            }
+        
+        
+    }, [gameData]);
     useEffect(() => {
         setTimeout(() => {
             AppOrtion();
@@ -474,6 +499,7 @@ const BlackjackGame = () => {
             _totalWin = _totalWin + player.win;
         }
     });
+    
     return (
         <div>
             <div className="game-room" id="scale">
@@ -491,7 +517,7 @@ const BlackjackGame = () => {
                         Your Wins
                         <div id="total-bet" className="counter" data-count={_totalWin}></div>
                     </div>
-                    {localStorage.getItem(gameId) && (
+                    {localStorage.getItem(gameId) && gameDataLive.status!="Spin" && (
                             <div
                                 className="balance-bet"
                                 onMouseEnter={() => {
@@ -562,7 +588,7 @@ const BlackjackGame = () => {
                     )}
                      {gameData.players.length > 0 && (
                         <div className="dealer-cards" id="betslist" style={{marginTop:1000,color:"#fff",height:300,overflow:'auto'}}>
-                            {gameData.players.sort((a, b) => (a.amount > b.amount ? -1 : a.x > b.x ? -1 : a.win > b.win ? -1 : 1)).map(function (x, i) {
+                            {listBets.map(function (x, i) {
                                 if (i < 500) {
                                     let card = x.betId.id;
                                     return (
@@ -570,7 +596,7 @@ const BlackjackGame = () => {
                                             <img src={"/imgs/avatars/" + x?.avatar + ".webp"} style={{ height: 40, marginRight: 10, float: "left" }} />
                                                             {x.nickname}
                                                             <br />
-                                                            <small className={x.win==0 && gameData.status=="End"?"animate__fadeIn animate__animated result-lose":x.win>0 && gameData.status=="End"?" result-win animate__fadeIn animate__animated":"animate__fadeIn animate__animated"}>{doCurrencyMil(x.amount)} on {card}{x.win > 0? <><br />x{x.x} - {doCurrencyMil(x.win)}</>:<><br />x{x.x}</>}</small>
+                                                            <small className={x.win==0 && gameData.status=="End"?"animate__fadeIn animate__animated result-lose":x.win>0 && gameData.status=="End"?" result-win animate__fadeIn animate__animated":"animate__fadeIn animate__animated"}>{doCurrencyMil(x.amount)} on {card}{x.win > 0? <><br />x{x.x} - {doCurrencyMil(x.win)}</>:<><br />x{36/x.betId.payload.length} </>}</small>
                                                             
                                         </div>
                                     );
@@ -581,7 +607,7 @@ const BlackjackGame = () => {
                 </div>
                 <Wheel number={gameDataLive.number} status={gameDataLive.status} last={lasts[0]} gameTimer={gameTimer} time={gameDataLive.startTimer} />
                 
-                <div  className={(gameTimer < 2) || gameData.gameOn == true || chip * 1000 > userData.balance ? "nochip bettable" : "bettable"} >
+                <div  className={(gameTimer < 2) || chip * 1000 > userData.balance ? "nochip bettable" : "bettable"} >
                 <TableBet handleBets={handleBets} bets={doplayers(gameData.players)} />
                 </div>
                 

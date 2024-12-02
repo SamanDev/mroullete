@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  background: #2d1135 !important;
+  
   
   padding: 0;
   margin: 0;
@@ -1229,17 +1229,17 @@ right: 90px;
   right: 0;
   top: 0px;
   bottom: 0px;
-  background-image: linear-gradient(180deg, transparent 30%, #2d1135 50%);
+  background-image: linear-gradient(180deg, transparent 15%, #2d1135 50%);
   transition: all 2s ease;
   z-index: 100;
   opacity: 1;
-  height: 135%;
+  height: 185%;
   
 }
 .lastwheel.Spin > div.shadow {
  
   
-  height: 185%;
+  top: 0;
   
 }
 
