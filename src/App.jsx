@@ -420,13 +420,13 @@ const BlackjackGame = () => {
                  $('[data-bet='+segments[gameData?.number]+']').addClass('item-selected-num');
                  $('[data-bet="'+segments[gameData?.number]+'"]').addClass('item-selected-num');
                  $('[data-bet]').removeClass('noclick-nohide')
-                 setTimeout(() => {
-                    $('#betslist').stop().animate({scrollTop:1000}, (gameData?.players?.length>0?gameData?.players?.length:1)*300, 'swing', function() { 
-                        $('#betslist').stop().animate({scrollTop:0}, (gameData?.players?.length>0?gameData?.players?.length:1)*300, 'swing', function() { 
+                
+                    $('#betslist').stop().animate({scrollTop:(gameData?.players?.length>0?gameData?.players?.length:1)*100}, 6000, 'swing', function() { 
+                        $('#betslist').stop().animate({scrollTop:0}, 1000, 'swing', function() { 
                             
                          });
                      });
-                }, 2000);
+              
                  
              }else{
                  $('.item-selected-num').removeClass('item-selected-num')
@@ -439,8 +439,8 @@ const BlackjackGame = () => {
              if(gameData?.status=='Spin'){
                 setLast(false);
                 setTimeout(() => {
-                    $('#betslist').stop().animate({scrollTop:1000}, (gameData?.players?.length>0?gameData?.players?.length:1)*300, 'swing', function() { 
-                        $('#betslist').stop().animate({scrollTop:0}, (gameData?.players?.length>0?gameData?.players?.length:1)*300, 'swing', function() { 
+                    $('#betslist').stop().animate({scrollTop:(gameData?.players?.length>0?gameData?.players?.length:1)*100}, 6000, 'swing', function() { 
+                        $('#betslist').stop().animate({scrollTop:0}, 1000, 'swing', function() { 
                             
                          });
                      });
@@ -601,7 +601,7 @@ const BlackjackGame = () => {
                                 if (i < 500) {
                                     let card = x.betId.id;
                                     return (
-                                        <div className={"animate__bounceIn animate__animated"} style={{ height: 50, marginBottom:10,lineHeight:'13px',fontSize:13 }}  key={i} >
+                                        <div className={" "} style={{ height: 50, marginBottom:10,lineHeight:'13px',fontSize:13 }}  key={i} >
                                             <img src={"/imgs/avatars/" + x?.avatar + ".webp"} style={{ height: 40, marginRight: 10, float: "left" }} />
                                                             {x.nickname}
                                                             <br />
