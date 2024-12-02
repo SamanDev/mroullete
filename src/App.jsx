@@ -432,10 +432,19 @@ const BlackjackGame = () => {
                  $('.item-selected-num').removeClass('item-selected-num')
  
                  $('.item-selected').removeClass('item-selected')
+                 
+                 
              
              }
              if(gameData?.status=='Spin'){
-                setLast(false)
+                setLast(false);
+                setTimeout(() => {
+                    $('#betslist').stop().animate({scrollTop:500}, (gameData?.players?.length>0?gameData?.players?.length:1)*500, 'swing', function() { 
+                        $('#betslist').stop().animate({scrollTop:0}, (gameData?.players?.length>0?gameData?.players?.length:1)*500, 'swing', function() { 
+                            
+                         });
+                     });
+                }, 2000);
              }
         
      
