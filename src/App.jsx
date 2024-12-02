@@ -420,13 +420,13 @@ const BlackjackGame = () => {
                  $('[data-bet='+segments[gameData?.number]+']').addClass('item-selected-num');
                  $('[data-bet="'+segments[gameData?.number]+'"]').addClass('item-selected-num');
                  $('[data-bet]').removeClass('noclick-nohide')
-                
+                 setTimeout(() => {
                     $('#betslist').stop().animate({scrollTop:(gameData?.players?.length>0?gameData?.players?.length:1)*100}, 6000, 'swing', function() { 
                         $('#betslist').stop().animate({scrollTop:0}, 1000, 'swing', function() { 
                             
                          });
                      });
-              
+                    }, 1000);
                  
              }else{
                  $('.item-selected-num').removeClass('item-selected-num')
@@ -438,13 +438,13 @@ const BlackjackGame = () => {
              }
              if(gameData?.status=='Spin'){
                 setLast(false);
-                setTimeout(() => {
+                
                     $('#betslist').stop().animate({scrollTop:(gameData?.players?.length>0?gameData?.players?.length:1)*100}, 6000, 'swing', function() { 
                         $('#betslist').stop().animate({scrollTop:0}, 1000, 'swing', function() { 
                             
                          });
                      });
-                }, 2000);
+                
              }
         
      
