@@ -441,6 +441,21 @@ const BlackjackGame = () => {
             setGameData(JSON.parse(localStorage.getItem(gameId)));
         } else {
             setGameData(gameDataLive);
+            if (gameDataLive?.players) {
+                gameDataLive.players.map(function (x, i) {
+                    
+    
+                    var blnIs = $("[data-bet=" + x.betId.id + ']').find('[username="' + x.nickname + '"]').length;
+                    if (blnIs == 0) {
+                        var cIcon = getChipIcon(x.amount);
+                    var cCount = $("[data-bet=" + x.betId.id + "]").find(".user").length+i;
+                        $("[data-bet=" + x.betId.id + "] > div").append('<div class="chip center user animate__animated animate__zoomInDown" username="' + x.nickname + '" style="animation-delay: '+i*.05+'s;transform: scale(0.7) translate(-' + ((cCount-i) * 5 + 30) + 'px,' + ((cCount-i) * 5) + 'px);background-image: url(&quot;/imgs/chips/Casino_Chip_' + cIcon + '.svg&quot;);"></div>');
+                    }
+                });
+                if (gameDataLive?.players.length==0) {
+                    $(".chip.user").remove();
+                }
+            } 
         }
         setTimeout(() => {
             animateNum();
@@ -448,20 +463,7 @@ const BlackjackGame = () => {
         }, 100);
     }, [last, gameDataLive]);
     useEffect(() => {
-        if (gameDataLive?.players) {
-            gameDataLive.players.map(function (x, i) {
-                var cIcon = getChipIcon(x.amount);
-                var cCount = $("[data-bet=" + x.betId.id + "]").find(".user").length;
-
-                var blnIs = $("[data-bet=" + x.betId.id + ']').find('[username="' + x.nickname + '"]').length;
-                if (blnIs == 0) {
-                    $("[data-bet=" + x.betId.id + "] > div").append('<div class="chip center user animate__animated animate__rollIn" username="' + x.nickname + '" style="transition-delay: '+cCount*1+'s;top:' + cCount * 5 + "px;right:" + cCount * 5 + "px;background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
-                }
-            });
-            if (gameDataLive?.players.length==0) {
-                $(".chip.user").remove();
-            }
-        } 
+        
         if (gameData?.players) {
             if (gameData?.status == "End") {
                 setListBets(gameData?.players.sort((a, b) => (a.win > b.win ? -1 : 1)));

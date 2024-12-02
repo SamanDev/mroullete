@@ -1,11 +1,8 @@
-
- img.rotate {
-    animation: loadingspin 30s linear  infinite ;
-   
+img.rotate {
+    animation: loadingspin 30s linear infinite;
 }
 
 @keyframes loadingspin {
-
     0% {
         transform: rotate(0deg);
     }
@@ -18,37 +15,33 @@
     --red: red !important;
     --black: #000;
     --hover: rgb(16, 80, 140) !important;
-    
 }
-.bettable{
+.bettable {
     position: relative;
-      z-index: 1;
-      transform: scale(1);
-      transform-origin: top center;
-      height: 370px;
-      
-      left: 0;
-      right: 0;
-      top: -100px;
-      transition: all 2s ease;
-      
-     
-  }
-  .nochip.bettable{
+    z-index: 1;
+    transform: scale(1);
+    transform-origin: top center;
+    height: 370px;
+
+    left: 0;
+    right: 0;
+    top: -100px;
+    transition: all 2s ease;
+}
+.nochip.bettable {
     top: -50px;
-      transform: scale(0.8);
-      opacity: .8;
-  
-  }
+    transform: scale(0.8);
+    opacity: 0.8;
+}
 .zero-item {
     background-color: green;
 }
-[data-bet]{
-    transition: all .5s ease !important;
+[data-bet] {
+    transition: all 0.5s ease !important;
 }
-.item-selected{
+.item-selected {
     background: linear-gradient(#c9b337, #c3bb70);
-    color:#000 !important;
+    color: #000 !important;
 }
 
 .item-selected-num::before {
@@ -57,11 +50,12 @@
     font-size: 33px;
     left: 0px;
     top: -2px;
-    color:gold;
+    color: gold;
     z-index: 0;
 }
 .chip.user {
-    transform:scale(.7) translateX(-30px)}
+    transform: scale(0.7) translateX(-30px);
+}
 .chip::after {
     content: "25K";
     position: absolute;
