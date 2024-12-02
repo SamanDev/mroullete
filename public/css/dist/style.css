@@ -1262,6 +1262,7 @@ right: 90px;
   transform: translateX(-50%);
   display: grid;
   transition: all .5s ease;
+  z-index: 5;
 }
 .curchip{
   transform: scale(.9) translateX(-20px) !important;
