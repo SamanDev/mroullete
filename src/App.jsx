@@ -601,7 +601,7 @@ const BlackjackGame = () => {
                                 if (i < 500) {
                                     let card = x.betId.id;
                                     return (
-                                        <div className={"animate__fadeIn animate__animated"} style={{ height: 50, marginBottom:10,lineHeight:'13px',fontSize:13 }}  key={i} >
+                                        <div className={"animate__bounceIn animate__animated"} style={{ height: 50, marginBottom:10,lineHeight:'13px',fontSize:13 }}  key={i} >
                                             <img src={"/imgs/avatars/" + x?.avatar + ".webp"} style={{ height: 40, marginRight: 10, float: "left" }} />
                                                             {x.nickname}
                                                             <br />
