@@ -421,8 +421,8 @@ const BlackjackGame = () => {
                  $('[data-bet="'+segments[gameData?.number]+'"]').addClass('item-selected-num');
                  $('[data-bet]').removeClass('noclick-nohide')
                  setTimeout(() => {
-                    $('#betslist').stop().animate({scrollTop:500}, (gameData?.players?.length>0?gameData?.players?.length:1)*500, 'swing', function() { 
-                        $('#betslist').stop().animate({scrollTop:0}, (gameData?.players?.length>0?gameData?.players?.length:1)*500, 'swing', function() { 
+                    $('#betslist').stop().animate({scrollTop:1000}, (gameData?.players?.length>0?gameData?.players?.length:1)*300, 'swing', function() { 
+                        $('#betslist').stop().animate({scrollTop:0}, (gameData?.players?.length>0?gameData?.players?.length:1)*300, 'swing', function() { 
                             
                          });
                      });
@@ -439,8 +439,8 @@ const BlackjackGame = () => {
              if(gameData?.status=='Spin'){
                 setLast(false);
                 setTimeout(() => {
-                    $('#betslist').stop().animate({scrollTop:500}, (gameData?.players?.length>0?gameData?.players?.length:1)*500, 'swing', function() { 
-                        $('#betslist').stop().animate({scrollTop:0}, (gameData?.players?.length>0?gameData?.players?.length:1)*500, 'swing', function() { 
+                    $('#betslist').stop().animate({scrollTop:1000}, (gameData?.players?.length>0?gameData?.players?.length:1)*300, 'swing', function() { 
+                        $('#betslist').stop().animate({scrollTop:0}, (gameData?.players?.length>0?gameData?.players?.length:1)*300, 'swing', function() { 
                             
                          });
                      });
