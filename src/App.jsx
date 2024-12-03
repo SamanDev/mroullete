@@ -47,9 +47,9 @@ const allBets = {
     "3RD_DOZEN": [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],
 };
 
-var _l = [];
+
 const getcolor = (item) => {
-    var def = "green";
+    let def = "green";
 
     if (REDSeg.includes(item)) {
         def = "red";
@@ -61,17 +61,17 @@ const getcolor = (item) => {
     return def;
 };
 const getcolortext = (item) => {
-    var def = "#ffffff";
+    let def = "#ffffff";
 
     return def;
 };
 const doCurrency = (value) => {
-    var val = value?.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    let val = value?.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     return val;
 };
 const getChipIcon = (value) => {
-    var chipsarr = ["Brown", "Purple", "Orange", "Red", "Blue", "Black"];
-    var _idc = 0;
+    let chipsarr = ["Brown", "Purple", "Orange", "Red", "Blue", "Black"];
+    let _idc = 0;
     _renge.map(function (bet, i) {
         if (bet == value / 1000) {
             _idc = i;
@@ -81,10 +81,11 @@ const getChipIcon = (value) => {
     return chipsarr[_idc];
 };
 const doCurrencyMil = (value, fix) => {
+    let val
     if (value < 1000000) {
-        var val = doCurrency(parseFloat(value / 1000).toFixed(fix || fix == 0 ? fix : 0)) + "K";
+         val = doCurrency(parseFloat(value / 1000).toFixed(fix || fix == 0 ? fix : 0)) + "K";
     } else {
-        var val = doCurrency(parseFloat(value / 1000000).toFixed(fix || fix == 0 ? fix : 1)) + "M";
+         val = doCurrency(parseFloat(value / 1000000).toFixed(fix || fix == 0 ? fix : 1)) + "M";
         val = val.replace(".0", "");
     }
     return val;
@@ -103,7 +104,7 @@ setInterval(() => {
 }, 2500);
 function animateNum() {
     $(".counter").each(function () {
-        var $this = $(this),
+        let $this = $(this),
             countTo = $this.attr("data-count"),
             countFrom = $this.attr("start-num") ? $this.attr("start-num") : parseInt($this.text().replace(/,/g, ""));
 
@@ -117,7 +118,7 @@ function animateNum() {
                 },
 
                 {
-                    duration: 400,
+                    duration: 200,
                     easing: "linear",
 
                     step: function () {
@@ -143,10 +144,10 @@ function animateNum() {
     });
 }
 const AppOrtion = () => {
-    var gWidth = $("#root").width() / 1400;
-    var gHight = $("#root").height() / 850;
-    var scale = gWidth < gHight ? gWidth : gHight;
-    var highProtect = $("#root").height() * scale;
+    let gWidth = $("#root").width() / 1400;
+    let gHight = $("#root").height() / 850;
+    let scale = gWidth < gHight ? gWidth : gHight;
+    let highProtect = $("#root").height() * scale;
     //console.log($("#root").width(),$("#root").height());
     // console.log(gWidth,gHight,scale);
 
@@ -156,7 +157,7 @@ const AppOrtion = () => {
         // scale = (scale + gHight)/2;
         scale = gHight;
         highProtect = $("#root").height() * scale;
-        var _t = ($("#root").height() - highProtect) / 2;
+        let _t = ($("#root").height() - highProtect) / 2;
         if (_t < 0) {
             _t = _t * -1;
         }
@@ -175,7 +176,7 @@ const AppOrtion = () => {
         // gHight = $("#root").height() / 850;
         // scale = (scale + gHight)/2;
         //  scale = gHight;
-        var _t = ($("#root").height() - highProtect) / 2;
+        let _t = ($("#root").height() - highProtect) / 2;
         if (_t < 0) {
             _t = _t * -1;
         }
@@ -206,13 +207,15 @@ window.addEventListener("message", function (event) {
         } catch (error) {}
     }
 });
-var supportsOrientationChange = "onorientationchange" in window,
+let supportsOrientationChange = "onorientationchange" in window,
     orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
 
 window.addEventListener(
     orientationEvent,
     function () {
-        AppOrtion();
+        setTimeout(() => {
+            AppOrtion();
+        }, 1000);
     },
     false
 );
@@ -266,6 +269,7 @@ const BlackjackGame = () => {
     const [last, setLast] = useState(false);
     const [conn, setConn] = useState(true);
     const [gameId, setGameId] = useState("Roulette01");
+
     const [gameTimer, setGameTimer] = useState(-1);
     const [listBets, setListBets] = useState([]);
     const [gameDataLive, setGameDataLive] = useState(null);
@@ -278,24 +282,7 @@ const BlackjackGame = () => {
 
         return check;
     };
-    const getTotalBets = (seat) => {
-        var userbet = gameData.players.filter((bet) => bet.seat == seat);
-        var Total = 0;
-        userbet.map(function (bet, i) {
-            Total = Total + bet.amount;
-        });
-        return doCurrencyMil(Total);
-    };
-    const getBets = (seat, username) => {
-        var userbet = gameData.players.filter((bet) => bet.seat == seat && bet.nickname == username);
-
-        return userbet[0];
-    };
-    const getAllBets = (seat, username) => {
-        var userbet = gameData.players.filter((bet) => bet.seat == seat && bet.nickname != username);
-
-        return userbet;
-    };
+    
     const doplayers = (betsP) => {
         let net = [];
         betsP
@@ -306,11 +293,7 @@ const BlackjackGame = () => {
             });
         return net;
     };
-    const getPercent = (seat) => {
-        var userbet = lasts.filter((x) => segments[x] == seat.x).length;
-
-        return parseFloat((userbet / lasts.length) * 100).toFixed(0);
-    };
+    
     useEffect(() => {
         // Event onopen baraye vaghti ke websocket baz shode
 
@@ -350,6 +333,10 @@ const BlackjackGame = () => {
                 if (data.sec == 5) {
                     timerRunningOut.play();
                 }
+                if (data.sec == 2) {
+                    setLast(false);
+        
+                }
                 // Update kardan state
             }
 
@@ -375,22 +362,21 @@ const BlackjackGame = () => {
             if (_data.players.length == 0) {
                 setGameTimer(15);
             }
-
-            setGameDataLive(_data);
+setGameDataLive(_data);
             //setGameData(_data);
         }
-        setTimeout(() => {
-            animateNum();
-            AppOrtion();
-        }, 100);
+        
     }, [gamesData]);
     useEffect(() => {
-        // console.log("gameId",gameId)
-        $(".chip.user").remove();
+        
+                
+          
         if (last) {
             $("body").css("background", "radial-gradient(#000000, #262a2b)");
+            $(".chip.user.org").remove();
         } else {
             $("body").css("background", "radial-gradient(#833838, #421e1e)");
+            $(".chip.user.lst").remove();
         }
     }, [last]);
     useEffect(() => {
@@ -403,33 +389,36 @@ const BlackjackGame = () => {
 
             $("[data-bet=" + segments[gameData?.number] + "]").addClass("item-selected-num");
             $('[data-bet="' + segments[gameData?.number] + '"]').addClass("item-selected-num");
-            $("[data-bet]").removeClass("noclick-nohide");
-            setTimeout(() => {
-                $("#betslist")
-                    .stop()
-                    .animate({ scrollTop: (gameData?.players?.length > 0 ? gameData?.players?.length : 1) * 100 }, 6000, "swing", function () {
-                        $("#betslist")
-                            .stop()
-                            .animate({ scrollTop: 0 }, 1000, "swing", function () {});
-                    });
-            }, 1000);
+           
+              
+            
         } else {
             $(".item-selected-num").removeClass("item-selected-num");
 
             $(".item-selected").removeClass("item-selected");
         }
         if (gameData?.status == "Spin") {
-            setLast(false);
+            //setLast(false);
 
-            $("#betslist")
-                .stop()
-                .animate({ scrollTop: (gameData?.players?.length > 0 ? gameData?.players?.length : 1) * 100 }, 6000, "swing", function () {
-                    $("#betslist")
-                        .stop()
-                        .animate({ scrollTop: 0 }, 1000, "swing", function () {});
-                });
+            
+        }else{
+            $("[data-bet]").removeClass("noclick-nohide");
         }
+        
+            $('#betslist:not(.doing)').addClass('doing').delay(2000).animate({
+                scrollTop: $('#betslist > div').height()-$('#betslist').height()
+            }, 6000,function(){
+                
+                $('#betslist.doing').delay(1000).animate({
+                    scrollTop: 0
+                }, 1000,function(){
+                    $('#betslist.doing').removeClass('doing')
+                });
 
+           
+            });
+       
+        
         // AppOrtion();
     }, [gameData?.status]);
     useEffect(() => {
@@ -446,7 +435,7 @@ const BlackjackGame = () => {
         }
         setTimeout(() => {
             animateNum();
-            AppOrtion();
+           // AppOrtion();
         }, 100);
     }, [last, gameDataLive]);
 
@@ -459,24 +448,27 @@ const BlackjackGame = () => {
             }
             gameData.players.map(function (x, i) {
                 if (x.nickname != userData?.nickname) {
+                    let modecls = "org"
+                        if(last){ modecls = "lst"}
                     if ($("[data-bet=" + x.betId.id + "]").length > 0) {
-                        var blnIs = $("[data-bet=" + x.betId.id + "]").find('[username="' + x.nickname + '"]').length;
+                        
+                        let blnIs = $("[data-bet=" + x.betId.id + "]").find('[username="' + x.nickname + '"]').length;
                         if (blnIs == 0) {
-                            var cIcon = getChipIcon(x.amount);
-                            var cCount = $("[data-bet=" + x.betId.id + "]").find(".user").length + i;
+                            let cIcon = getChipIcon(x.amount);
+                            let cCount = $("[data-bet=" + x.betId.id + "]").find(".user").length + i;
                             if (x.betId.payload.length == 1) {
-                                $("[data-bet=" + x.betId.id + "] > div.value").append('<div class="chip center user animate__animated animate__zoomInDown" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.05 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 30) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                                $("[data-bet=" + x.betId.id + "] > div.value").append('<div class="chip center user animate__animated animate__zoomInDown '+ modecls+'" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.05 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 30) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
                             } else {
-                                $("[data-bet=" + x.betId.id + "] > div").append('<div class="chip center user animate__animated animate__zoomInDown" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.05 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 30) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                                $("[data-bet=" + x.betId.id + "] > div").append('<div class="chip center user animate__animated animate__zoomInDown '+ modecls+'" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.05 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 30) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
                             }
                         }
                     } else {
-                        var blnIs = $("[data-highlight=" + x.betId.id + "]").find('[username="' + x.nickname + '"]').length;
+                        let blnIs = $("[data-highlight=" + x.betId.id + "]").find('[username="' + x.nickname + '"]').length;
                         if (blnIs == 0) {
-                            var cIcon = getChipIcon(x.amount);
-                            var cCount = $("[data-highlight=" + x.betId.id + "]").find(".user").length + i;
+                            let cIcon = getChipIcon(x.amount);
+                            let cCount = $("[data-highlight=" + x.betId.id + "]").find(".user").length + i;
 
-                            $("[data-highlight=" + x.betId.id + "]").append('<div class="chip center user animate__animated animate__zoomInDown" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.05 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 10) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                            $("[data-highlight=" + x.betId.id + "]").append('<div class="chip center user animate__animated animate__zoomInDown '+ modecls+'" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.05 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 10) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
                         }
                     }
                 }
@@ -486,7 +478,7 @@ const BlackjackGame = () => {
     useEffect(() => {
         setTimeout(() => {
             AppOrtion();
-        }, 500);
+        }, 1000);
     }, []);
     // Agar gaData nist, ye matn "Loading" neshan bede
     const handleBets = (data) => {
@@ -517,7 +509,7 @@ const BlackjackGame = () => {
 
     return (
         <div>
-            <div className="game-room" id="scale">
+            <div className={last?"last game-room":"game-room"} id="scale">
                 <Info setGameId={setGameId} gameId={gameId} totalBetAll={_totalBetAll} totalWinAll={_totalWinAll} />
                 <div id="balance-bet-box">
                     <div className="balance-bet">
@@ -532,7 +524,7 @@ const BlackjackGame = () => {
                         Your Wins
                         <div id="total-bet" className="counter" data-count={_totalWin}></div>
                     </div>
-                    {localStorage.getItem(gameId) && gameDataLive.status == "Done" && (
+                    {localStorage.getItem(gameId) && gameDataLive.status == "Done" && gameTimer > 2 && (
                         <div
                             className="balance-bet"
                             onMouseEnter={() => {
@@ -591,9 +583,9 @@ const BlackjackGame = () => {
                         <div className="dealer-cards">
                             {lasts.map(function (x, i) {
                                 if (i < 50) {
-                                    var card = segments[x];
+                                    let card = segments[x];
                                     return (
-                                        <div className="visibleCards animate__flipInY animate__animated" key={i} style={{ animationDelay: (i + 1) * 90 + "ms", background: getcolor(card), color: getcolortext(card) }}>
+                                        <div className="visibleCards animate__fadeIn animate__animated" key={i} style={{ animationDelay: (i + 1) * 90 + "ms", background: getcolor(card), color: getcolortext(card) }}>
                                             {card}
                                         </div>
                                     );
@@ -603,6 +595,7 @@ const BlackjackGame = () => {
                     )}
                     {gameData.players.length > 0 && (
                         <div className="dealer-cards" id="betslist" style={{ marginTop: 1000, color: "#fff", height: 300, overflow: "auto" }}>
+                            <div>
                             {listBets.map(function (x, i) {
                                 if (i < 500) {
                                     let card = x.betId.id;
@@ -627,12 +620,13 @@ const BlackjackGame = () => {
                                     );
                                 }
                             })}
+                            </div>
                         </div>
                     )}
                 </div>
 
-                <Wheel number={gameDataLive.number} status={gameDataLive.status} last={lasts[0]} gameTimer={gameTimer} time={gameDataLive.startTimer} />
-                <div className={gameTimer < 2 || chip * 1000 > userData.balance ? "nochip bettable" : "bettable"}>
+                <Wheel number={gameData.number} status={gameData.status} last={lasts[0]} gameTimer={gameTimer} time={gameData.startTimer} />
+                <div className={gameTimer < 2  || chip * 1000 > userData.balance ? "nochip bettable" : "bettable"}>
                     <TableBet handleBets={handleBets} bets={doplayers(gameData.players)} />
                 </div>
             </div>

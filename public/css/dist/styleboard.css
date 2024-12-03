@@ -26,18 +26,33 @@ img.rotate {
     left: 0;
     right: 0;
     top: -100px;
-    transition: all 2s ease;
+    transition: all 3s;
+    opacity: 1;
+}
+.bettable > div {
+   max-width: 850px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.1);
+box-shadow: 0px 0px 100px 20px rgba(0, 0, 0, 0.95);
+    padding: 7px 10px 15px 10px;
+    border-radius: 10px;
 }
 .nochip.bettable {
     top: -50px;
-    transform: scale(0.8);
-    opacity: 0.8;
+transform: scale(.8);
+pointer-events: none;
+cursor: not-allowed;
+}
+.last * {
+    animation-duration: 0s!important;
+    animation-delay: 0s !important;
+    transition-duration: 0s  !important
 }
 .zero-item {
     background-color: green;
 }
 [data-bet] {
-    transition: all 0.5s ease !important;
+    transition: 'background' 0.1s  !important;
 }
 .item-selected {
     background: linear-gradient(#c9b337, #c3bb70);

@@ -921,9 +921,9 @@ body {
 }
 
 .result-lose {
-  color: #f20000;
+  color: red;
   
-  opacity: .1;
+  opacity: 1;
 }
 
 .result-draw {
@@ -1213,13 +1213,17 @@ right: 90px;
     left: 0;
     right: 0;
     top: -50px;
-    transition: all 9s ease;
+    transition: all 4s ease;
 
 }
 .lastwheel.Spin{
   
-    transform: scale(1.8);
-    
+  transform: scale(1.8);
+  
+
+}
+.lastwheel.Done{
+  opacity: .5;
 
 }
 .lastwheel > div.shadow {
@@ -1389,8 +1393,8 @@ right: 90px;
   background-color: #22303f;
   overflow: hidden;
   border-radius: 1000px;
-  margin: auto;
 }
+
 .tabl2 .betButtons{
   filter: hue-rotate(45deg);
 }

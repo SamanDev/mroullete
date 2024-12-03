@@ -5,7 +5,7 @@ const REDSeg = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 3
 const BLACKSeg = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35];
 let _l = [];
 const getcolor = (item) => {
-    var def = "green";
+    let def = "green";
 
     if (REDSeg.includes(item)) {
         def = "red";
@@ -17,10 +17,11 @@ const getcolor = (item) => {
     return def;
 };
 const getcolortext = (item) => {
-    var def = "#ffffff";
+    let def = "#ffffff";
 
     return def;
 };
+
 segments.map((item, i) => {
     _l.push({
         option: item,
@@ -30,33 +31,45 @@ segments.map((item, i) => {
         },
     });
 });
+const getIndex = (num) => {
+    const index = segments.findIndex(item => item == num);
+    console.log(num,index,segments);
+    
+return index
+}
 const WheelContect = (prop) => {
     const [mustSpin, setMustSpin] = useState(false);
 
     const [mustSpinFF, setMustSpinFF] = useState(false);
     const [prizeNumber, setPrizeNumber] = useState(0);
-    const [timer, setTimer] = useState(prop.time);
+  
 
     useEffect(() => {
+      
+
         if (mustSpin==false && prop.status == "Spin") {
             const newPrizeNumber = prop.number;
-            setMustSpinFF(true);
+            setMustSpinFF(false);
             setPrizeNumber(newPrizeNumber);
             setMustSpin(true);
 
             //const newPrizeNumber = Math.floor(Math.random() * _l.length);
         
         }
+        if (prop.status == "End") {
+            
+            setMustSpin(false);
+            setMustSpinFF(true);
+            //const newPrizeNumber = Math.floor(Math.random() * _l.length);
+        
+        }
       
         
     }, [prop.status]);
-    useEffect(() => {
-        setTimer(prop.time);
-        
-    }, [prop.time]);
+    
 
     return (
-        <div className={prop.status == "Spin" && prop.gameTimer < 3 ? "lastwheel Spin" : "lastwheel " + prop.status}>
+        <div className={ prop.gameTimer < 5 ? "lastwheel Spin" : "lastwheel " + prop.status}>
             <div className="shadow"></div>
             <div className="countover">
                 {prop.status == "Spin" ? (
@@ -84,15 +97,14 @@ const WheelContect = (prop) => {
                 textDistance={85}
                 perpendicularText={true}
                 fontSize={15}
-                spinDuration={parseFloat((timer) / 15).toFixed(2)}
-                startingOptionIndex={!mustSpinFF ? prop.last : -1}
-                disableInitialAnimation={false}
+                startingOptionIndex={(prop.last)}
+                spinDuration={parseFloat((prop.time) / 15).toFixed(2)}
                 mustStartSpinning={mustSpin}
                 prizeNumber={prizeNumber}
                 pointerProps={{ src: "/imgs/avatars/baby.svg" }}
                 onStopSpinning={() => {
-                    setMustSpin(false);
-                    setMustSpinFF(false);
+                   setMustSpin(false);
+                   // setMustSpinFF(true);
                 }}
             />
         </div>
