@@ -39,7 +39,7 @@ box-shadow: 0px 0px 100px 20px rgba(0, 0, 0, 0.95);
 }
 .nochip.bettable {
     top: -50px;
-transform: scale(.8);
+transform: scale(.9);
 pointer-events: none;
 cursor: not-allowed;
 }
