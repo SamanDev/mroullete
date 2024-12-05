@@ -925,7 +925,9 @@ body {
   
   opacity: 1;
 }
-
+#betslist img{
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.443));
+}
 .result-draw {
   border: 2px solid #c8c8c8;
   color: #c8c8c8;
