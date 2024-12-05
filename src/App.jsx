@@ -437,7 +437,7 @@ setGameDataLive(_data);
             animateNum();
            // 
         }, 100);
-        AppOrtion();
+       // AppOrtion();
     }, [last, gameDataLive]);
 
     useEffect(() => {
@@ -477,8 +477,10 @@ setGameDataLive(_data);
         }
     }, [gameData]);
     useEffect(() => {
-       
+        setTimeout(() => {
             AppOrtion();
+        }, 1000);
+           
       
     }, []);
     // Agar gaData nist, ye matn "Loading" neshan bede
