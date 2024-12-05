@@ -145,13 +145,13 @@ function animateNum() {
 }
 const AppOrtion = () => {
     let gWidth = $("#root").width() / 1400;
-    let gHight = $("#root").height() / 850;
+    let gHight = $("#root").height() / 730;
     let scale = gWidth < gHight ? gWidth : gHight;
-    let highProtect = $("#root").height() * scale;
+    let highProtect = $("#root > div").height() * scale;
     //console.log($("#root").width(),$("#root").height());
     // console.log(gWidth,gHight,scale);
 
-    if (highProtect > 850) {
+    if (highProtect > 730) {
         //console.log(gWidth,gHight,highProtect);
         //gHight = $("#root").height() / 850;
         // scale = (scale + gHight)/2;
@@ -435,8 +435,9 @@ setGameDataLive(_data);
         }
         setTimeout(() => {
             animateNum();
-           // AppOrtion();
+           // 
         }, 100);
+        AppOrtion();
     }, [last, gameDataLive]);
 
     useEffect(() => {
@@ -476,9 +477,9 @@ setGameDataLive(_data);
         }
     }, [gameData]);
     useEffect(() => {
-        setTimeout(() => {
+       
             AppOrtion();
-        }, 1000);
+      
     }, []);
     // Agar gaData nist, ye matn "Loading" neshan bede
     const handleBets = (data) => {
