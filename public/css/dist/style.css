@@ -452,7 +452,7 @@ body {
   height: 100%;
   transition: all .1s ease;
   min-height: 750px !important;
-  transform-origin: top;
+  transform-origin: center;
 }
 
 #users-online-box {
@@ -799,16 +799,16 @@ body {
     overflow: hidden;
 }
 
-#root > div{
+
+#root > div {
   height: 750px;
   position: relative;
   width: 1400px;
-  top: 10px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  transform-origin: top center;
+  transform: translateX(-50%) translateY(-48%);
+  transform-origin: center;
 }
-
 .players-timer {
   position: relative;
   width: 100px;
@@ -1220,7 +1220,7 @@ right: 90px;
 }
 .lastwheel.Spin{
   
-  transform: scale(1.8);
+  transform: scale(1.6);
   
 
 }
@@ -1397,6 +1397,7 @@ right: 90px;
   border-radius: 1000px;
 }
 
+
 .tabl2 .betButtons{
   filter: hue-rotate(45deg);
 }
@@ -1409,6 +1410,13 @@ right: 90px;
 .content-img {
   height: 70px;
   margin-bottom: 30px;
+}
+#scale{
+  opacity: 0 !important;
+  transition: transform 0.4s  !important;
+}
+#scale[style]{
+  opacity: 1 !important;
 }
 .betButtons.place.winner {
   box-shadow: 0 0 10px rgb(9, 226, 27);

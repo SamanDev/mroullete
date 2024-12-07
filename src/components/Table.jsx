@@ -11,7 +11,7 @@ const TableBet = (prop) => {
 
     return (
         <div>
-            <RouletteTable bets={prop?.bets ? prop.bets : []} onBet={handleBet} />
+            <RouletteTable bets={{}} onBet={handleBet} />
         </div>
     );
 };
