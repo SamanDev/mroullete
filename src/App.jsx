@@ -201,32 +201,8 @@ window.addEventListener(
 window.parent.postMessage("userget", "*");
 
 if (window.self == window.top) {
-    // window.location.href = "https://www.google.com/";
+     window.location.href = "https://www.google.com/";
 }
-let dealingSound = new Howl({
-    src: ["/sounds/dealing_card_fix3.mp3"],
-    volume: 0.5,
-});
-let chipHover = new Howl({
-    src: ["/sounds/chip_hover_fix.mp3"],
-    volume: 0.1,
-});
-let chipPlace = new Howl({
-    src: ["/sounds/chip_place.mp3"],
-    volume: 0.1,
-});
-let actionClick = new Howl({
-    src: ["/sounds/actionClick.mp3"],
-    volume: 0.1,
-});
-let defaultClick = new Howl({
-    src: ["/sounds/click_default.mp3"],
-    volume: 0.1,
-});
-let clickFiller = new Howl({
-    src: ["/sounds/click_filler.mp3"],
-    volume: 0.1,
-});
 let timerRunningOut = new Howl({
     src: ["/sounds/timer_running_out.mp3"],
     volume: 0.5,
@@ -241,11 +217,7 @@ let timerRunningOut = new Howl({
 
 const Main = () => {
     const [chip, setChip] = useState(50);
-    useEffect(() => {
-        setTimeout(() => {
-            UserWebsocket.connect(WEB_URL, _auth);
-        }, 1000);
-    }, []);
+    
 
     return (
         <div>
@@ -703,7 +675,7 @@ const TableContect = (prop) => {
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
-       
+        UserWebsocket.connect(WEB_URL, _auth);
         eventBus.on("tables", (data) => {
             setGamesData(data.games[0]);
             if (gameTimer == -1) {
