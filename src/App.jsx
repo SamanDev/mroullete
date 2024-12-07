@@ -192,7 +192,7 @@ window.addEventListener(
     function () {
         clearTimeout(sizeBln);
         sizeBln = setTimeout(() => {
-            // $("#scale").removeAttr("style");
+            $("#scale").removeAttr("style");
             AppOrtion();
         }, 1000);
     },

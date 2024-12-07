@@ -23,7 +23,7 @@ function isJson(str) {
 class UserWebsocket {
     connect(WEB_URL, _auth) {
       
-        if (ws == null) {
+        if (ws == null && !isJson(WEB_URL)) {
             ws = new WebSocket(WEB_URL, _auth);
 
             ws.onopen = function live() {
