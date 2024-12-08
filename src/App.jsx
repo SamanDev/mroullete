@@ -15,7 +15,7 @@ const loc = new URL(window.location);
 const pathArr = loc.pathname.toString().split("/");
 
 if (pathArr.length == 3) {
-    _auth = pathArr[1];
+    _auth = pathArr[1] + "___"+pathArr[2];
 }
 
 //_auth = "farshad-HangOver2";
@@ -28,7 +28,8 @@ _renge.push(_renge[1] * 5);
 _renge.push(_renge[1] * 10);
 _renge.push(_renge[1] * 20);
 //const WEB_URL = process.env.REACT_APP_MODE === "production" ? `wss://${process.env.REACT_APP_DOMAIN_NAME}/` : `ws://${loc.hostname}:8088`;
-const WEB_URL = `wss://mroullete.wheelofpersia.com/`;
+//const WEB_URL = `wss://mroullete.wheelofpersia.com/`;
+const WEB_URL = `ws://${loc.hostname}:8092/`;
 // (A) LOCK SCREEN ORIENTATION
 
 const segments = ["0", 26, 3, 35, 12, 28, 7, 29, 18, 22, 9, 31, 14, 20, 1, 33, 16, 24, "00", 5, 10, 23, 8, 30, 11, 36, 13, 27, 6, 34, 17, 25, 2, 21, 4, 19, 15, 32];
