@@ -195,7 +195,7 @@ window.addEventListener(
         sizeBln = setTimeout(() => {
             $("#scale").removeAttr("style");
             AppOrtion();
-        }, 1000);
+        }, 500);
     },
     false
 );
@@ -676,7 +676,10 @@ const TableContect = (prop) => {
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
-        UserWebsocket.connect(WEB_URL, _auth);
+        setTimeout(() => {
+            UserWebsocket.connect(WEB_URL, _auth);
+        }, 500);
+        
         eventBus.on("tables", (data) => {
             setGamesData(data.games[0]);
             if (gameTimer == -1) {
