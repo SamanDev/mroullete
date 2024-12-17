@@ -186,7 +186,7 @@ const AppOrtion = () => {
 };
 
 let supportsOrientationChange = "onorientationchange" in window,
-    orientationEvent = supportsOrientationChange ? supportsOrientationChange : "resize";
+    orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
 var sizeBln;
 window.addEventListener(
     orientationEvent,
