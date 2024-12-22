@@ -273,6 +273,7 @@ const BlackjackGame = (prop) => {
         eventBus.on("close", () => {
             setConn(false);
             _auth = null;
+            setGamesData([]);
         });
     }, []);
 
@@ -613,7 +614,7 @@ const WheelContectNew = () => {
             const defnum = num;
             function rotate() {
                 const mydeg = tot * 28 + Math.floor((Math.random() * tot) / 1.5);
-                console.log(tot * 28, defnum);
+                //console.log(tot * 28, defnum);
 
                 ctx.canvas.style.transform = `rotate(${mydeg - defnum * tot}deg)`;
             }
