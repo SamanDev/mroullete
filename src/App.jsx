@@ -198,7 +198,7 @@ window.addEventListener(
 window.parent.postMessage("userget", "*");
 
 if (window.self == window.top) {
-    // window.location.href = "https://www.google.com/";
+     window.location.href = "https://www.google.com/";
 }
 let timerRunningOut = new Howl({
     src: ["/sounds/timer_running_out.mp3"],
@@ -381,18 +381,22 @@ const BlackjackGame = (prop) => {
                             let cIcon = getChipIcon(x.amount);
                             let cCount = $("[data-bet=" + x.betId.id + "]").find(".user").length + i;
                             if (x.betId.payload.length == 1) {
-                                $("[data-bet=" + x.betId.id + "] > div.value").append('<div class="chip center user animate__animated animate__zoomInDown ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.005 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 30) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                                $("[data-bet=" + x.betId.id + "] > div.value").append('<div class="chip center user animate__animated animate__zoomInDown ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.002 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 30) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
                             } else {
-                                $("[data-bet=" + x.betId.id + "] > div").append('<div class="chip center user animate__animated animate__zoomInDown ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.005 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 30) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                                $("[data-bet=" + x.betId.id + "] > div").append('<div class="chip center user animate__animated animate__zoomInDown ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.002 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 30) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
                             }
                         }
                     } else {
-                        let blnIs = $("[data-highlight=" + x.betId.id + "]").find('[username="' + x.nickname + '"]').length;
+                        let blnIs = $("[data-highlight=" + x.betId.id + "]:first").find('[username="' + x.nickname + '"]').length;
                         if (blnIs == 0) {
                             let cIcon = getChipIcon(x.amount);
-                            let cCount = $("[data-highlight=" + x.betId.id + "]").find(".user").length + i;
-
-                            $("[data-highlight=" + x.betId.id + "]").append('<div class="chip center user animate__animated animate__zoomInDown ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.005 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCount - i) * 5 + 10) + "px," + (cCount - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                            let cCountC = $("[data-highlight=" + x.betId.id + "]").find(".user").length + i;
+                            let cCount = x.betId.id.split('-');
+                            var cclass = "center"
+                            if(cCount.length==2 && (parseInt(cCount[0])+1!=parseInt(cCount[1]) && parseInt(cCount[0])-1!=parseInt(cCount[1]))){cclass = "right-center"}
+                            if(cCount.length==2 && parseInt(cCount[0]) == 0  && (cCount[1]) == "00" ){cclass = "center"}
+                            if(cCount.length==2 && parseInt(cCount[0]) == 0  && (cCount[1]) != "00" ){cclass = "right-center"}
+                            $("[data-highlight=" + x.betId.id + "]:first").append('<div class="chip '+cclass+' user animate__animated animate__zoomInDown ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.005 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCountC - i) * 5 + 10) + "px," + (cCountC - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
                         }
                     }
                 } else {
@@ -407,18 +411,26 @@ const BlackjackGame = (prop) => {
                             let cIcon = getChipIcon(x.amount);
                             let cCount = $("[data-bet=" + x.betId.id + "]").find(".user").length + i;
                             if (x.betId.payload.length == 1) {
-                                $("[data-bet=" + x.betId.id + "] > div.value").append('<div class="chip center animate__animated animate__rotateIn ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.005 : 0.001) + "s;background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                                $("[data-bet=" + x.betId.id + "] > div.value").append('<div class="chip center animate__animated animate__rotateIn ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.002 : 0.001) + "s;background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
                             } else {
-                                $("[data-bet=" + x.betId.id + "] > div").append('<div class="chip center animate__animated animate__rotateIn ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.005 : 0.001) + "s;background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                                $("[data-bet=" + x.betId.id + "] > div").append('<div class="chip center animate__animated animate__rotateIn ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.002 : 0.001) + "s;background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
                             }
                         }
                     } else {
-                        let blnIs = $("[data-highlight=" + x.betId.id + "]").find('[username="' + x.nickname + '"]').length;
+                        let blnIs = $("[data-highlight=" + x.betId.id + "]:first").find('[username="' + x.nickname + '"]').length;
                         if (blnIs == 0) {
                             let cIcon = getChipIcon(x.amount);
-                            let cCount = $("[data-highlight=" + x.betId.id + "]").find(".user").length + i;
+                            let cCount = x.betId.id.split('-');
+                            var cclass = "center"
+                            if(cCount.length==2 && (parseInt(cCount[0])+1!=parseInt(cCount[1]) && parseInt(cCount[0])-1!=parseInt(cCount[1]))){cclass = "right-center"}
+                            if(cCount.length==2 && parseInt(cCount[0]) == 0  && (cCount[1]) == "00" ){cclass = "center"}
+                            if(cCount.length==2 && parseInt(cCount[0]) == 0  && (cCount[1]) != "00" ){cclass = "right-center"}
 
-                            $("[data-highlight=" + x.betId.id + "]").append('<div class="chip center animate__animated animate__rotateIn ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.005 : 0.001) + "s;background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                           // if(cCount.length==3){cclass = "left-top"}
+                           // if(cCount.length==5){cclass = "right-top"}
+
+
+                            $("[data-highlight=" + x.betId.id + "]:first").append('<div class="chip '+cclass+' animate__animated animate__rotateIn ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.002 : 0.001) + "s;background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
                         }
                     }
                 }
