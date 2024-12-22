@@ -1257,37 +1257,6 @@ margin: auto;
   padding: 0 7px 7px 7px;
 }
 
-.roulette-table-container::before,
-.roulette-table-container::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: linear-gradient(45deg,red,blue,green,yellow,#e11d74,black,#ffff00,#aa0000);
-  background-size: 400%;
-  width: calc(100%);
-  height: calc(100%);
-  z-index: -1;
-  animation: animate 55s linear infinite;
-}
-
-.roulette-table-container::after {
-  filter: blur(25px);
-}
-
-@keyframes animate {
-  0% {
-    background-position: 0 0;
-  }
-
-  50% {
-    background-position: 400% 0;
-  }
-
-  100% {
-    background-position: 0 0;
-  }
-}
 #wheel {
   display: block;
   width: 450px;
@@ -1346,7 +1315,7 @@ margin: auto;
   height: 185%;
   
 }
-.lastwheel.Spin > div.shadow {
+.lastwheel.Spin  div.shadow {
  
   
   top: 0;
