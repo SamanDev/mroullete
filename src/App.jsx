@@ -15,7 +15,7 @@ const loc = new URL(window.location);
 const pathArr = loc.pathname.toString().split("/");
 
 if (pathArr.length == 3) {
-    _auth = pathArr[1] + "___"+pathArr[2];
+    _auth = pathArr[1] + "___" + pathArr[2];
 }
 
 //_auth = "farshad-HangOver2";
@@ -101,20 +101,16 @@ function checkbox() {
         $("#cadr").hide();
     }
 }
-setInterval(() => {
-    checkbox();
-}, 500);
-let _l = [];
 
+let _l = [];
+let sectors = [];
 segments.map((item, i) => {
-    _l.push({
-        option: item,
-        style: {
-            backgroundColor: getcolor(item),
-            textColor: getcolortext(item),
-        },
+    sectors.push({
+        label: item,
+        color: getcolor(item),
     });
 });
+
 function animateNum() {
     $(".counter").each(function () {
         let $this = $(this),
@@ -202,7 +198,7 @@ window.addEventListener(
 window.parent.postMessage("userget", "*");
 
 if (window.self == window.top) {
-     window.location.href = "https://www.google.com/";
+    // window.location.href = "https://www.google.com/";
 }
 let timerRunningOut = new Howl({
     src: ["/sounds/timer_running_out.mp3"],
@@ -218,22 +214,21 @@ let timerRunningOut = new Howl({
 
 const Main = () => {
     const [chip, setChip] = useState(50);
-    
 
     return (
         <div>
             <div className={"game-room"} id="scale">
-                <BlackjackGame setChip={setChip} chip={chip}/>
-                <WheelContect />
+                <BlackjackGame setChip={setChip} chip={chip} />
+                <WheelContectNew />
 
-                <TableContect  chip={chip}/>
+                <TableContect chip={chip} />
             </div>
         </div>
     );
 };
 const BlackjackGame = (prop) => {
     const [gamesData, setGamesData] = useState([]);
-   
+
     const [lasts, setLasts] = useState([]);
     const [gameData, setGameData] = useState({ status: "" }); // Baraye zakhire JSON object
     const [last, setLast] = useState(false);
@@ -318,9 +313,9 @@ const BlackjackGame = (prop) => {
         }
         if (gameData?.status == "Spin") {
             //setLast(false);
-            $('.lastwheel').addClass("Spin")
+            $(".lastwheel").addClass("Spin");
         } else {
-            $('.lastwheel').removeClass("Spin")
+            $(".lastwheel").removeClass("Spin");
             $("[data-bet]").removeClass("noclick-nohide");
         }
 
@@ -570,6 +565,111 @@ const BlackjackGame = (prop) => {
     );
 };
 
+const WheelContectNew = () => {
+    const [gamesData, setGamesData] = useState([]);
+    const [startNum, setStartNum] = useState(-1);
+
+    const [gameTimer, setGameTimer] = useState(-1);
+    const initGame = (num, rot) => {
+        if (document.getElementsByTagName("canvas")[0]) {
+            const tot = 360 / sectors.length;
+            const ctx = document.querySelector("#wheel").getContext("2d");
+            if (!$("canvas").hasClass("drowed")) {
+                $("canvas").addClass("drowed");
+                var canvas = document.getElementsByTagName("canvas")[0];
+                canvas.width = 600;
+                canvas.height = 600;
+
+                const dia = ctx.canvas.width;
+                const rad = dia / 2;
+                const PI = Math.PI;
+                const TAU = 2 * PI;
+                const arc = TAU / sectors.length;
+
+                function drawSector(sector, i) {
+                    const ang = arc * i;
+                    ctx.save();
+                    // COLOR
+                    ctx.beginPath();
+                    ctx.fillStyle = sector.color;
+                    ctx.moveTo(rad, rad);
+                    ctx.arc(rad, rad, rad, ang, ang + arc);
+                    ctx.lineTo(rad, rad);
+                    ctx.fill();
+                    // TEXT
+                    ctx.translate(rad, rad);
+                    ctx.rotate(ang + arc / 2);
+                    ctx.textAlign = "right";
+                    ctx.fillStyle = "#fff";
+                    ctx.font = "bold 22px sans-serif";
+                    ctx.fillText(sector.label, rad - 50, 7);
+
+                    //
+                    ctx.restore();
+                }
+                sectors.forEach(drawSector);
+                rot = true;
+            }
+            const defnum = num;
+            function rotate() {
+                const mydeg = tot * 28 + Math.floor((Math.random() * tot) / 1.5);
+                console.log(tot * 28, defnum);
+
+                ctx.canvas.style.transform = `rotate(${mydeg - defnum * tot}deg)`;
+            }
+            if (rot) rotate();
+        }
+    };
+    var lightMod;
+    useEffect(() => {
+        eventBus.on("tables", (data) => {
+            setGamesData(data.games[0]);
+            if (data.games[0].status == "Spin") {
+                lightMod = setInterval(() => {
+                    checkbox();
+                }, 1000);
+                $("#dospin").removeClass("frz").addClass("dospin");
+                $("canvas").removeClass("frz");
+
+                initGame(data.games[0].number, true);
+
+                //const newPrizeNumber = Math.floor(Math.random() * _l.length);
+            } else {
+                clearInterval(lightMod);
+                $("#dospin").addClass("frz").removeClass("dospin");
+                $("canvas").addClass("frz");
+                initGame(data.games[0].number);
+            }
+        });
+
+        eventBus.on("close", () => {
+            setGamesData([]);
+        });
+    }, []);
+
+    //console.log(mustSpin, prizeNumber, startNum, gameTimer);
+
+    return (
+        <>
+            <div className={"lastwheel"}>
+                <div>
+                    <div className="shadow"></div>
+                    <div className="countover">
+                        <img src="/imgs/cadr2.png" id="cadr" />
+                        <img src="/imgs/cadr4.png" id="cadr2" style={{ display: "none" }} />
+
+                        <img src="/imgs/cadr3.png" className="rotate" />
+                    </div>
+                    <div id="wheelOfFortune">
+                        <div id="dospin" className="" style={{ transitionDuration: 12 + "s" }}>
+                            <canvas id="wheel" width="600" height="600" style={{ transitionDuration: 6 + "s" }}></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
 const WheelContect = () => {
     const [mustSpin, setMustSpin] = useState(false);
 
@@ -580,7 +680,6 @@ const WheelContect = () => {
     const [gameTimer, setGameTimer] = useState(-1);
 
     useEffect(() => {
-        
         eventBus.on("tables", (data) => {
             if (data.games[0].status == "Spin" || data.games[0].status == "End") {
                 if (mustSpin == false && data.games[0]?.status == "Spin") {
@@ -592,7 +691,7 @@ const WheelContect = () => {
                 }
                 if (data.games[0].status == "End") {
                     if (mustSpin) {
-                       // setMustSpin(false);
+                        // setMustSpin(false);
                     }
                 }
                 if (gamesData.length == 0) {
@@ -616,7 +715,6 @@ const WheelContect = () => {
         eventBus.on("close", () => {
             setGamesData([]);
         });
-
     }, []);
 
     if (startNum == -1) {
@@ -661,7 +759,7 @@ const WheelContect = () => {
                     pointerProps={{ src: "/imgs/avatars/baby.svg" }}
                     onStopSpinning={() => {
                         //setStartNum(prizeNumber);
-                         setMustSpin(false);
+                        setMustSpin(false);
                         // setMustSpinFF(true);
                     }}
                 />
@@ -679,7 +777,7 @@ const TableContect = (prop) => {
         setTimeout(() => {
             UserWebsocket.connect(WEB_URL, _auth);
         }, 500);
-        
+
         eventBus.on("tables", (data) => {
             setGamesData(data.games[0]);
             if (gameTimer == -1) {
@@ -702,7 +800,6 @@ const TableContect = (prop) => {
         eventBus.on("close", () => {
             setGamesData([]);
         });
-
     }, []);
 
     if (!gamesData?.status) {
@@ -710,10 +807,10 @@ const TableContect = (prop) => {
     }
     const handleBets = (data) => {
         if (!gamesData.gameOn && gameTimer >= 0 && checkBets(data, userData.nickname)) {
-           // $("[data-bet=" + data.bet + "]").addClass("noclick-nohide");
+            // $("[data-bet=" + data.bet + "]").addClass("noclick-nohide");
 
             $(".roulette-table-container").addClass("noclick-nohide");
-            
+
             //console.log(JSON.stringify({ method: "bet", amount: chip * 1000, theClient: userData, gameId: gamesData.id, bet: data }));
             UserWebsocket.connect(JSON.stringify({ method: "bet", amount: chip * 1000, theClient: userData, gameId: gamesData.id, bet: data }));
         }
@@ -727,10 +824,10 @@ const TableContect = (prop) => {
 
         return check;
     };
-    
+
     return (
         <>
-            <div className={chip * 1000 > userData.balance ? "nochip bettable" : "bettable"}>
+            <div className={chip * 1000 > userData.balance || gamesData.status=="Spin" ? "nochip bettable" : "bettable"}>
                 <TableBet handleBets={handleBets} />
             </div>
         </>

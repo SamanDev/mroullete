@@ -1217,7 +1217,111 @@ right: 90px;
     top: -50px;
     transition: all 4s ease;
 
+
 }
+.lastwheel > div{
+ 
+width: 450px;
+margin: auto;
+
+}
+
+#wheelOfFortune {
+  display: inline-block;
+  position: absolute;
+  overflow: hidden;
+  transform: rotate(45deg);
+}
+#wheelOfFortune canvas{
+  
+  transition:10s ease-in-out;
+
+}
+#dospin{
+  transform-origin: 50% 50%;
+  transition-duration:10s ;
+  transition-timing-function: cubic-bezier(.14,-0.13,.04,1);
+ 
+
+}
+.frz{
+  transition-duration:0s !important;
+}
+#dospin.dospin{
+  rotate: 10turn;
+}
+
+.roulette-table-container {
+  position: relative;
+  background: #15202B;
+  padding: 0 7px 7px 7px;
+}
+
+.roulette-table-container::before,
+.roulette-table-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(45deg,red,blue,green,yellow,#e11d74,black,#ffff00,#aa0000);
+  background-size: 400%;
+  width: calc(100%);
+  height: calc(100%);
+  z-index: -1;
+  animation: animate 55s linear infinite;
+}
+
+.roulette-table-container::after {
+  filter: blur(25px);
+}
+
+@keyframes animate {
+  0% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 400% 0;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
+}
+#wheel {
+  display: block;
+  width: 450px;
+}
+
+#spin {
+  font: 1em / 0 sans-serif;
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  height: 30%;
+  margin: -15%;
+  background: #fff;
+  color: #fff;
+  box-shadow: 0 0 0 8px currentColor, 0 0px 15px 5px rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  transition: 0.8s;
+}
+
+#spin::after {
+  content: '';
+  position: absolute;
+  top: -17px;
+  border: 10px solid transparent;
+  border-bottom-color: currentColor;
+  border-top: none;
+}
+
 .lastwheel.Spin{
   
   transform: scale(1.6);
@@ -1228,7 +1332,7 @@ right: 90px;
   opacity: .5;
 
 }
-.lastwheel > div.shadow {
+.lastwheel  div.shadow {
  
   position: fixed;
   left: -100%;
