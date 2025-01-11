@@ -589,6 +589,7 @@ const BlackjackGame = (prop) => {
     );
 };
 var initTime;
+var lightMod;
 const WheelContectNew = () => {
     const [gamesData, setGamesData] = useState([]);
     const [startNum, setStartNum] = useState(-1);
@@ -664,10 +665,11 @@ const WheelContectNew = () => {
             }, 400);
         }
     };
-    var lightMod;
+   
     useEffect(() => {
         eventBus.on("tables", (data) => {
             setGamesData(data.games[0]);
+            clearInterval(lightMod);
         });
 
         eventBus.on("close", () => {
@@ -675,6 +677,7 @@ const WheelContectNew = () => {
         });
     }, []);
     useEffect(() => {
+        
         if (gamesData?.status) {
             //console.log(gamesData);
 
@@ -693,7 +696,7 @@ const WheelContectNew = () => {
             } else {
                 setTimer(15);
                 $(".lastwheel").removeClass("Spin");
-                clearInterval(lightMod);
+               
                 $("#dospin").addClass("frz").removeClass("dospin");
                 $("canvas").addClass("frz");
                 initGame(gamesData.number,false);
@@ -708,7 +711,7 @@ const WheelContectNew = () => {
         <>
             <div className={"lastwheel"}>
                 <div>
-                    <div className="shadow" style={{ transitionDuration: timer - 3 + "s" }}></div>
+                    <div className="shadow"></div>
                     <div className="countover">
                         <img src="/imgs/cadr2.png" id="cadr" />
                         <img src="/imgs/cadr4.png" id="cadr2" style={{ display: "none" }} />
