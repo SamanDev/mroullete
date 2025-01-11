@@ -198,7 +198,7 @@ window.addEventListener(
 window.parent.postMessage("userget", "*");
 
 if (window.self == window.top) {
-     window.location.href = "https://www.google.com/";
+    window.location.href = "https://www.google.com/";
 }
 let timerRunningOut = new Howl({
     src: ["/sounds/timer_running_out.mp3"],
@@ -391,12 +391,18 @@ const BlackjackGame = (prop) => {
                         if (blnIs == 0) {
                             let cIcon = getChipIcon(x.amount);
                             let cCountC = $("[data-highlight=" + x.betId.id + "]").find(".user").length + i;
-                            let cCount = x.betId.id.split('-');
-                            var cclass = "center"
-                            if(cCount.length==2 && (parseInt(cCount[0])+1!=parseInt(cCount[1]) && parseInt(cCount[0])-1!=parseInt(cCount[1]))){cclass = "right-center"}
-                            if(cCount.length==2 && parseInt(cCount[0]) == 0  && (cCount[1]) == "00" ){cclass = "center"}
-                            if(cCount.length==2 && parseInt(cCount[0]) == 0  && (cCount[1]) != "00" ){cclass = "right-center"}
-                            $("[data-highlight=" + x.betId.id + "]:first").append('<div class="chip '+cclass+' user animate__animated animate__zoomInDown ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.005 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCountC - i) * 5 + 10) + "px," + (cCountC - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                            let cCount = x.betId.id.split("-");
+                            var cclass = "center";
+                            if (cCount.length == 2 && parseInt(cCount[0]) + 1 != parseInt(cCount[1]) && parseInt(cCount[0]) - 1 != parseInt(cCount[1])) {
+                                cclass = "right-center";
+                            }
+                            if (cCount.length == 2 && parseInt(cCount[0]) == 0 && cCount[1] == "00") {
+                                cclass = "center";
+                            }
+                            if (cCount.length == 2 && parseInt(cCount[0]) == 0 && cCount[1] != "00") {
+                                cclass = "right-center";
+                            }
+                            $("[data-highlight=" + x.betId.id + "]:first").append('<div class="chip ' + cclass + " user animate__animated animate__zoomInDown " + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.005 : 0.001) + "s;transform: scale(0.7) translate(-" + ((cCountC - i) * 5 + 10) + "px," + (cCountC - i) * 5 + "px);background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
                         }
                     }
                 } else {
@@ -420,17 +426,22 @@ const BlackjackGame = (prop) => {
                         let blnIs = $("[data-highlight=" + x.betId.id + "]:first").find('[username="' + x.nickname + '"]').length;
                         if (blnIs == 0) {
                             let cIcon = getChipIcon(x.amount);
-                            let cCount = x.betId.id.split('-');
-                            var cclass = "center"
-                            if(cCount.length==2 && (parseInt(cCount[0])+1!=parseInt(cCount[1]) && parseInt(cCount[0])-1!=parseInt(cCount[1]))){cclass = "right-center"}
-                            if(cCount.length==2 && parseInt(cCount[0]) == 0  && (cCount[1]) == "00" ){cclass = "center"}
-                            if(cCount.length==2 && parseInt(cCount[0]) == 0  && (cCount[1]) != "00" ){cclass = "right-center"}
+                            let cCount = x.betId.id.split("-");
+                            var cclass = "center";
+                            if (cCount.length == 2 && parseInt(cCount[0]) + 1 != parseInt(cCount[1]) && parseInt(cCount[0]) - 1 != parseInt(cCount[1])) {
+                                cclass = "right-center";
+                            }
+                            if (cCount.length == 2 && parseInt(cCount[0]) == 0 && cCount[1] == "00") {
+                                cclass = "center";
+                            }
+                            if (cCount.length == 2 && parseInt(cCount[0]) == 0 && cCount[1] != "00") {
+                                cclass = "right-center";
+                            }
 
-                           // if(cCount.length==3){cclass = "left-top"}
-                           // if(cCount.length==5){cclass = "right-top"}
+                            // if(cCount.length==3){cclass = "left-top"}
+                            // if(cCount.length==5){cclass = "right-top"}
 
-
-                            $("[data-highlight=" + x.betId.id + "]:first").append('<div class="chip '+cclass+' animate__animated animate__rotateIn ' + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.002 : 0.001) + "s;background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
+                            $("[data-highlight=" + x.betId.id + "]:first").append('<div class="chip ' + cclass + " animate__animated animate__rotateIn " + modecls + '" username="' + x.nickname + '" style="animation-delay: ' + i * (!last ? 0.002 : 0.001) + "s;background-image: url(&quot;/imgs/chips/Casino_Chip_" + cIcon + '.svg&quot;);"></div>');
                         }
                     }
                 }
@@ -577,16 +588,29 @@ const BlackjackGame = (prop) => {
         </>
     );
 };
-
+var initTime;
 const WheelContectNew = () => {
     const [gamesData, setGamesData] = useState([]);
     const [startNum, setStartNum] = useState(-1);
 
     const [gameTimer, setGameTimer] = useState(-1);
+    const [timer, setTimer] = useState(5);
+    
     const initGame = (num, rot) => {
+      //  console.log(initTime);
+        
+
+        clearTimeout(initTime);
         if (document.getElementsByTagName("canvas")[0]) {
             const tot = 360 / sectors.length;
             const ctx = document.querySelector("#wheel").getContext("2d");
+            if (rot == true) {
+                $(".lastwheel").addClass("Spin");
+
+                $("#dospin").removeClass("frz").addClass("dospin");
+                $("canvas").removeClass("frz");
+         
+            }
             if (!$("canvas").hasClass("drowed")) {
                 $("canvas").addClass("drowed");
                 var canvas = document.getElementsByTagName("canvas")[0];
@@ -621,6 +645,7 @@ const WheelContectNew = () => {
                     ctx.restore();
                 }
                 sectors.forEach(drawSector);
+                
                 rot = true;
             }
             const defnum = num;
@@ -630,43 +655,60 @@ const WheelContectNew = () => {
 
                 ctx.canvas.style.transform = `rotate(${mydeg - defnum * tot}deg)`;
             }
-            if (rot) rotate();
+           // console.log(num, rot);
+            if (rot)rotate();
+            
+        } else {
+            initTime = setTimeout(() => {
+                initGame(num, rot);
+            }, 400);
         }
     };
     var lightMod;
     useEffect(() => {
         eventBus.on("tables", (data) => {
             setGamesData(data.games[0]);
-            if (data.games[0].status == "Spin") {
-                lightMod = setInterval(() => {
-                    checkbox();
-                }, 1000);
-                $("#dospin").removeClass("frz").addClass("dospin");
-                $("canvas").removeClass("frz");
-
-                initGame(data.games[0].number, true);
-
-                //const newPrizeNumber = Math.floor(Math.random() * _l.length);
-            } else {
-                clearInterval(lightMod);
-                $("#dospin").addClass("frz").removeClass("dospin");
-                $("canvas").addClass("frz");
-                initGame(data.games[0].number);
-            }
         });
 
         eventBus.on("close", () => {
             setGamesData([]);
         });
     }, []);
+    useEffect(() => {
+        if (gamesData?.status) {
+            //console.log(gamesData);
 
+            if (gamesData.status == "Spin") {
+                if (timer != 15) {
+                    setTimer(gamesData.startTimer);
+                }
+
+                lightMod = setInterval(() => {
+                    checkbox();
+                }, 1000);
+
+                initGame(gamesData.number, true);
+
+                //const newPrizeNumber = Math.floor(Math.random() * _l.length);
+            } else {
+                setTimer(15);
+                $(".lastwheel").removeClass("Spin");
+                clearInterval(lightMod);
+                $("#dospin").addClass("frz").removeClass("dospin");
+                $("canvas").addClass("frz");
+                initGame(gamesData.number,false);
+            }
+        }
+    }, [gamesData.status]);
     //console.log(mustSpin, prizeNumber, startNum, gameTimer);
-
+    if (!gamesData?.number || timer == 5) {
+        return <Loaderr />;
+    }
     return (
         <>
             <div className={"lastwheel"}>
                 <div>
-                    <div className="shadow"></div>
+                    <div className="shadow" style={{ transitionDuration: timer - 3 + "s" }}></div>
                     <div className="countover">
                         <img src="/imgs/cadr2.png" id="cadr" />
                         <img src="/imgs/cadr4.png" id="cadr2" style={{ display: "none" }} />
@@ -674,8 +716,8 @@ const WheelContectNew = () => {
                         <img src="/imgs/cadr3.png" className="rotate" />
                     </div>
                     <div id="wheelOfFortune">
-                        <div id="dospin" className="" style={{ transitionDuration: 12 + "s" }}>
-                            <canvas id="wheel" width="600" height="600" style={{ transitionDuration: 6 + "s" }}></canvas>
+                        <div id="dospin" className="" style={{ transitionDuration: timer - 3 + "s" }}>
+                            <canvas id="wheel" width="450" height="450" style={{ transitionDuration: timer - 12 + "s" }}></canvas>
                         </div>
                     </div>
                 </div>
@@ -840,7 +882,7 @@ const TableContect = (prop) => {
 
     return (
         <>
-            <div className={chip * 1000 > userData.balance || gamesData.status=="Spin" ? "nochip bettable" : "bettable"}>
+            <div className={chip * 1000 > userData.balance || gamesData.status == "Spin" ? "nochip bettable" : "bettable"}>
                 <TableBet handleBets={handleBets} />
             </div>
         </>
