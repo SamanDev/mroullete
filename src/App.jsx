@@ -854,6 +854,10 @@ const TableContect = (prop) => {
                 // setConn(false);
                 //_auth = null;
             }
+            setInterval(() => {
+
+                    socket.send(JSON.stringify({ method: "ping" }));
+                }, 15000);
         });
         eventBus.on("close", () => {
             setGamesData([]);
