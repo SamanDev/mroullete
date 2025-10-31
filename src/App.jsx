@@ -704,7 +704,7 @@ const WheelContectNew = () => {
         }
     }, [gamesData.status]);
     //console.log(mustSpin, prizeNumber, startNum, gameTimer);
-    if (!gamesData?.number || timer == 5) {
+    if (gamesData?.number <0|| timer == 5) {
         return <Loaderr />;
     }
     return (
