@@ -2,13 +2,7 @@
 import eventBus from "./eventBus";
 
 var ws = null;
-var ws2;
-var res = false;
-var timeout = 35000;
 var timerId;
-var usr;
-var tkn = false;
-var count = 0;
 function isJson(str) {
     // alert("str00 = "+str)
     try {
@@ -61,7 +55,7 @@ class UserWebsocket {
                 eventBus.dispatch("close");
             };
           
-            ws.onerror = function (e) {
+            ws.onerror = function () {
                 eventBus.dispatch("close");
             };
         } else {

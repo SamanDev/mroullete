@@ -8,7 +8,7 @@ import TableBet from "./components/Table";
 import eventBus from "./eventBus";
 import UserWebsocket from "./user.websocket";
 
-import { Wheel } from "react-custom-roulette";
+
 
 let _auth = null;
 const loc = new URL(window.location);
@@ -728,103 +728,7 @@ const WheelContectNew = () => {
         </>
     );
 };
-const WheelContect = () => {
-    const [mustSpin, setMustSpin] = useState(false);
 
-    const [prizeNumber, setPrizeNumber] = useState(0);
-    const [gamesData, setGamesData] = useState([]);
-    const [startNum, setStartNum] = useState(-1);
-
-    const [gameTimer, setGameTimer] = useState(-1);
-
-    useEffect(() => {
-        eventBus.on("tables", (data) => {
-            if (data.games[0].status == "Spin" || data.games[0].status == "End") {
-                if (mustSpin == false && data.games[0]?.status == "Spin") {
-                    const newPrizeNumber = data.games[0].number;
-
-                    setMustSpin(true);
-                    setPrizeNumber(newPrizeNumber);
-                    //const newPrizeNumber = Math.floor(Math.random() * _l.length);
-                }
-                if (data.games[0].status == "End") {
-                    if (mustSpin) {
-                        // setMustSpin(false);
-                    }
-                }
-                if (gamesData.length == 0) {
-                    setGamesData(data.games[0]);
-                }
-            } else {
-                if (startNum != data.games[0].number) {
-                    // setGamesData(data.games[0]);
-                    setStartNum(data.games[0].number);
-                }
-            }
-        });
-        eventBus.on("timer", (data) => {
-            if (data.sec > 10) {
-                //setGameTimer(data.sec);
-            }
-        });
-        eventBus.on("lasts", (data) => {
-            setStartNum(data.total[0]);
-        });
-        eventBus.on("close", () => {
-            setGamesData([]);
-        });
-    }, []);
-
-    if (startNum == -1) {
-        return <Loaderr />;
-    }
-    //console.log(mustSpin, prizeNumber, startNum, gameTimer);
-
-    return (
-        <>
-            <div className={"lastwheel"}>
-                <div className="shadow"></div>
-                <div className="countover">
-                    {gamesData.status == "Spin" ? (
-                        <>
-                            <img src="/imgs/cadr2.png" id="cadr" />
-                            <img src="/imgs/cadr4.png" id="cadr2" />
-                        </>
-                    ) : (
-                        <>
-                            <img src="/imgs/cadr2.png" />
-                            <img src="/imgs/cadr4.png" />
-                        </>
-                    )}
-                    <img src="/imgs/cadr3.png" className="rotate" />
-                </div>
-                <Wheel
-                    data={_l}
-                    outerBorderWidth={0}
-                    outerBorderColor={"#eeeeee"}
-                    innerRadius={10}
-                    innerBorderColor={"#000000"}
-                    innerBorderWidth={0}
-                    radiusLineColor={"#000000"}
-                    radiusLineWidth={1}
-                    textDistance={85}
-                    perpendicularText={true}
-                    fontSize={15}
-                    startingOptionIndex={startNum}
-                    spinDuration={parseFloat(gamesData.startTimer / 19).toFixed(2)}
-                    mustStartSpinning={mustSpin}
-                    prizeNumber={prizeNumber}
-                    pointerProps={{ src: "/imgs/avatars/baby.svg" }}
-                    onStopSpinning={() => {
-                        //setStartNum(prizeNumber);
-                        setMustSpin(false);
-                        // setMustSpinFF(true);
-                    }}
-                />
-            </div>
-        </>
-    );
-};
 const TableContect = (prop) => {
     const chip = prop.chip;
     const [gamesData, setGamesData] = useState(null);
