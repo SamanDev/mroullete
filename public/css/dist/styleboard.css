@@ -14,7 +14,30 @@ img.rotate {
 .roulette-table-container {
     --red: red !important;
     --black: #000;
-    --hover: rgb(16, 80, 140) !important;
+    --hover: rgba(116, 39, 134, 0.555) !important;
+    font-weight: 700 !important;
+}
+
+.item-hover,
+.zero-item,
+.red-item,
+.black-item,
+.column-item,
+.doz-item,
+.outside-section {
+  transition: background-color 0s ease;
+}
+
+.item-hover,
+.zero-item:hover,
+.red-item:hover,
+.black-item:hover
+/*
+.column-item:hover,
+.doz-item:hover,
+.outside-section:hover*/ {
+  background-color: var(--hover);
+  cursor: pointer;
 }
 .bettable {
     position: relative;
@@ -25,35 +48,38 @@ img.rotate {
 
     left: 0;
     right: 0;
-    top: -100px;
-    transition: all 3s;
+    top: -50px;
+    transition: transform 3s,top 2s;
     opacity: 1;
 }
 .bettable > div {
    max-width: 850px;
     margin: auto;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(165, 54, 54, 0.1);
 box-shadow: 0px 0px 100px 20px rgba(0, 0, 0, 0.95);
     padding: 7px 10px 15px 10px;
     border-radius: 10px;
 }
+.last .bettable {
+    top: -20px;
+transform: scale(.9);
+
+}
+.nochip.bettable.Spin {
+    top: -20px;
+transform: scale(.9);
+
+}
 .nochip.bettable {
-    top: -50px;
-transform: scale(.8);
+
 pointer-events: none;
 cursor: not-allowed;
 }
-.last * {
-    animation-duration: 0s!important;
-    animation-delay: 0s !important;
-    transition-duration: 0s  !important
-}
+
 .zero-item {
     background-color: green;
 }
-[data-bet] {
-    transition: background-color 0.1s ease !important;
-}
+
 .item-selected {
     background: linear-gradient(#c9b337, #c3bb70);
     color: #000 !important;

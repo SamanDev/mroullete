@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 * {
   padding: 0;
   margin: 0;
@@ -15,11 +16,14 @@ html {
 }
 
 body {
-  
-  
+
+  background: #262a2b;
+
+  font-size: 22px !important;
   padding: 0;
   margin: 0;
   opacity: 1;
+  transition: background .5s ease;
 }
 
 #table-graphics {
@@ -34,6 +38,7 @@ body {
   opacity: 0.15;
   pointer-events: none;
 }
+
 #dark-overlay {
   position: absolute;
   width: 100%;
@@ -42,18 +47,14 @@ body {
   opacity: 0;
   transition: 400ms;
 }
+
 #dark-overlay.curplayer {
   top: -50%;
   opacity: 1;
- z-index: 1; 
-}
-:root {
-  --info-rules-width: -492px;
+  z-index: 1;
 }
 
-.hide-element {
-  
-}
+
 
 .player-left {
   opacity: 0.3;
@@ -108,6 +109,7 @@ body {
     transform: rotateZ(1500deg);
   }
 }
+
 #loading-screen {
   position: fixed;
   padding: 0;
@@ -120,183 +122,6 @@ body {
   z-index: 101;
 }
 
-#main-menu {
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-}
-#main-menu #blackjack-title {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  font-size: 60px;
-  font-weight: 500;
-  font-family: "Ultra", sans-serif;
-  color: goldenrod;
-  width: 100%;
-  padding: 0;
-  margin-top: 40px;
-  pointer-events: none;
-  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#f2f6f8+0,d8e1e7+50,b5c6d0+51,e0eff9+100;Grey+Gloss+%232 */
-  background: #f2f6f8;
-  /* Old browsers */
-  background: -moz-linear-gradient(top, #f2f6f8 0%, #d8e1e7 50%, #b5c6d0 51%, #e0eff9 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #f2f6f8 0%, #d8e1e7 50%, #b5c6d0 51%, #e0eff9 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #f2f6f8 0%, #d8e1e7 50%, #b5c6d0 51%, #e0eff9 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#f2f6f8", endColorstr="#e0eff9",GradientType=0 );
-  /* IE6-9 */
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-#main-menu #blackjack-title span {
-  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#aebcbf+0,6e7774+50,0a0e0a+51,0a0809+100;Black+Gloss */
-  background: #aebcbf;
-  /* Old browsers */
-  background: -moz-linear-gradient(top, #aebcbf 0%, #6e7774 50%, #0a0e0a 51%, #0a0809 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #aebcbf 0%, #6e7774 50%, #0a0e0a 51%, #0a0809 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #aebcbf 0%, #6e7774 50%, #0a0e0a 51%, #0a0809 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#aebcbf", endColorstr="#0a0809",GradientType=0 );
-  /* IE6-9 */
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: white;
-}
-
-#a_offline {
-  text-decoration-line: none;
-}
-
-#main-box {
-  position: relative;
-  width: 500px;
-  border: 3px solid black;
-  margin: 160px auto 0 auto;
-  text-align: center;
-  border-radius: 10px 10px 0px 0px;
-  background-color: #2d6b30;
-  -webkit-box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.75);
-  z-index: 3;
-}
-#main-box div {
-  margin: 20px 0px 20px 0px;
-}
-#main-box #avatar-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 4px;
-}
-#main-box #avatar-box i {
-  color: black;
-  padding: 6px;
-  font-weight: 700;
-  font-size: 18px;
-}
-#main-box #avatar-box button:nth-of-type(1) i {
-  margin-right: 6px;
-}
-#main-box #avatar-box button:nth-of-type(2) i {
-  margin-left: 6px;
-}
-#main-box #avatar-box .slideAvatars {
-  position: relative;
-  border: 2px solid black;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  width: 80px;
-  height: 80px;
-}
-#main-box #avatar-box .slideAvatars img {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 8px;
-}
-#main-box #avatar-box .slideAvatars .numbertext {
-  position: absolute;
-  left: 50%;
-  bottom: -38px;
-  font-size: 12px;
-  transform: translateX(-50%);
-  color: white;
-  opacity: 0.8;
-}
-#main-box #avatar-box button {
-  border: none;
-  outline: none;
-  background-color: transparent;
-  cursor: pointer;
-  padding: none;
-}
-#main-box #avatar-box button:hover i {
-  color: rgba(255, 255, 255, 0.8);
-}
-#main-box #avatar-box button:active i {
-  transform: scale(0.9);
-}
-#main-box input {
-  width: 45%;
-  padding: 6px 0;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 600;
-  font-size: 20px;
-  border: none;
-  outline: none;
-  outline: 1px solid rgba(255, 255, 255, 0);
-  border-radius: 2px;
-  transition: 100ms;
-}
-#main-box input:focus {
-  box-shadow: 0 0 1px 2px black;
-}
-#main-box .play-btns {
-  font-family: "Open Sans", sans-serif;
-  font-weight: 600;
-  
-  vertical-align: middle;
-  margin: auto;
-  width: 60%;
-  padding: 6px 0;
-  color: white;
-  font-size: 30px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
-#main-box button {
-  background:#0a0809;
-  font-size: 14px !important;
-  text-align:center
-}
-#main-box .play-btns span i {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  width: 38px;
-}
-#main-box #btnOffline {
-  margin-top: 40px;
-  background-color: #143853;
-}
-#main-box #btnOffline:hover {
-  background-color: #0d2436;
-}
-#main-box #btnCreate, #main-box #btnJoin {
-  background-color: #c7971d;
-}
-#main-box #btnCreate:hover, #main-box #btnJoin:hover {
-  background-color: #9e750d;
-}
 
 #info-rules {
   position: absolute;
@@ -313,14 +138,18 @@ body {
   transition: 300ms;
   z-index: 300;
 }
+
 #info-rules h1 {
   color: white;
   border-top: 2px solid #d84a17c5;
   font-family: "Play", sans-serif;
 }
-#info-rules p, #info-rules li {
+
+#info-rules p,
+#info-rules li {
   padding: 0 6px;
 }
+
 #info-rules #h1margin {
   margin-top: 64px;
   border-top: 0px solid rgba(255, 255, 255, 0);
@@ -389,6 +218,7 @@ body {
   z-index: 0;
   transition: 250ms;
 }
+
 #about-box ul {
   padding: 12px 0px 12px 20px;
   margin: 0;
@@ -444,15 +274,28 @@ body {
 #credits-container {
   color: white;
 }
+
 #credits-container a {
   color: rgba(87, 165, 255, 0.8);
 }
 
 .game-room {
-  height: 100%;
-  transition: all .1s ease;
-  min-height: 750px !important;
-  transform-origin: center;
+
+  opacity: 0;
+  transition: transform .5s ease, opacity .1s ease;
+  height: 800px !important;
+
+}
+
+.game-room[style] {
+  opacity: 1;
+
+}
+
+.fix {
+  position: relative;
+  top: 70px;
+  height: 100% !important;
 }
 
 #users-online-box {
@@ -473,6 +316,7 @@ body {
   user-select: none;
   /* Standard syntax */
 }
+
 #users-online-box #users-online-label {
   text-shadow: 1px 1px black;
   font-size: 14px;
@@ -480,6 +324,7 @@ body {
   font-family: "Play", sans-serif;
   margin: 12px 40px 12px 0px;
 }
+
 #users-online-box .user-list-name {
   font-family: "Open Sans", sans-serif;
   -webkit-user-select: none;
@@ -489,6 +334,7 @@ body {
   user-select: none;
   /* Standard syntax */
 }
+
 #users-online-box #users-online-button {
   position: absolute;
   right: 0;
@@ -500,12 +346,15 @@ body {
   align-items: center;
   cursor: pointer;
 }
+
 #users-online-box #users-online-button i {
   transition: 200ms;
 }
+
 #users-online-box #users-online-button:hover {
   color: #cccccc;
 }
+
 #users-online-box ul {
   position: relative;
   width: 100%;
@@ -515,6 +364,7 @@ body {
   list-style-type: none;
   font-size: 15px;
 }
+
 #users-online-box ul .users-list-box {
   position: relative;
   width: 100%;
@@ -524,12 +374,15 @@ body {
   height: 56px;
   border-top: 2px solid #d84a17c5;
 }
+
 #users-online-box ul .users-list-box .users-list-info {
   margin-right: 40px;
 }
+
 #users-online-box ul .users-list-box .users-list-info span {
   color: lime;
 }
+
 #users-online-box ul .users-list-box .users-list-img {
   position: absolute;
   right: 0;
@@ -540,6 +393,7 @@ body {
   height: 42px;
   margin: 4px;
 }
+
 #users-online-box ul .users-list-box .users-list-img img {
   max-width: 100%;
   max-height: 100%;
@@ -561,12 +415,14 @@ body {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  
+
 }
+
 #volume-button i {
   color: white;
   font-size: 18px;
 }
+
 #volume-button .fa-volume-mute {
   color: #ff9393;
 }
@@ -582,6 +438,7 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+
 #bg-color-box .bg-colors {
   width: 42px;
   height: 42px;
@@ -589,18 +446,23 @@ body {
   border: 1px solid black;
   cursor: pointer;
 }
+
 #bg-color-box #bg-green {
   background-color: #265328af;
 }
+
 #bg-color-box #bg-blue {
   background-color: #274f55af;
 }
+
 #bg-color-box #bg-purple {
   background-color: #293b5aaf;
 }
+
 #bg-color-box #bg-red {
   background-color: #582828af;
 }
+
 #bg-color-box #bg-brown {
   background-color: #534e26af;
 }
@@ -611,10 +473,10 @@ body {
 
 #leave-button {
   position: absolute;
-  margin-top: 10px;
+  top: 25px;
   margin-left: 90px;
   height: 30px;
-  
+
   z-index: 10;
   -webkit-user-select: none;
   /* Safari */
@@ -622,21 +484,24 @@ body {
   /* IE 10+ and Edge */
   user-select: none;
   /* Standard syntax */
+  left: 185px;
 }
+
 #leave-button .button {
   width: 120px !important;
 }
-.modal.tiny *{
+
+.modal.tiny * {
   font-size: 96% !important;
 }
-.myloading,.myloading *:not(i):not(br){
-  position: absolute !important;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background:transparent !important
+
+.myloading {
+  background: transparent !important;
+  margin-top: -70px;
+  position: relative !important;
+
 }
+
 #leave-table {
   position: absolute;
   bottom: 40px;
@@ -661,6 +526,7 @@ body {
   user-select: none;
   /* Standard syntax */
 }
+
 #leave-table i {
   color: lime;
 }
@@ -723,12 +589,14 @@ body {
 #deal-start-label {
   position: absolute;
   left: 50%;
-  margin-top: 160px;
+
   display: inline-block;
   font-size: 36px;
   color: white;
   transform: translateX(-50%);
   text-align: center;
+  z-index: 30;
+  margin-top: -520px;
 }
 
 #players-container {
@@ -766,16 +634,18 @@ body {
   transform: scale(1);
   transition: all 1s ease;
 }
+
 .players.curplayer {
   z-index: 34;
 }
-.bets-side-win{
+
+.bets-side-win {
   color: chartreuse;
-    font-size: 20px;
-    position: absolute;
-    margin-top: -24px;
-    width: 100%;
-    text-align: center;
+  font-size: 20px;
+  position: absolute;
+  margin-top: -24px;
+  width: 100%;
+  text-align: center;
 }
 
 #players-timer-container {
@@ -792,23 +662,25 @@ body {
   pointer-events: none;
   z-index: 10;
 }
+
 #root {
-  height: 100vh;
-   
-    width: 100vw;
-    overflow: hidden;
+  background: radial-gradient(#00000000, #000000bd) !important;
+  height: 100dvh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 
-#root > div {
-  height: 750px;
+#root>div {
+  height: 800px;
   position: relative;
   width: 1400px;
   top: 50%;
   left: 50%;
-  transform: translateX(-50%) translateY(-48%);
+  transform: translateX(-50%) translateY(-50%);
   transform-origin: center;
 }
+
 .players-timer {
   position: relative;
   width: 100px;
@@ -921,13 +793,10 @@ body {
 }
 
 .result-lose {
-  color: red;
-  
+  filter: grayscale(80%);
   opacity: 1;
 }
-#betslist img{
-  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.443));
-}
+
 .result-draw {
   border: 2px solid #c8c8c8;
   color: #c8c8c8;
@@ -936,7 +805,7 @@ body {
 
 .result-win {
   color: #00de00;
- }
+}
 
 .result-blackjack {
   border: 2px solid gold;
@@ -952,22 +821,23 @@ body {
   left: 50%;
   margin-left: -35px;
   top: 12%;
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
   pointer-events: none;
- 
+
   font-family: "Roboto", sans-serif;
   text-shadow: 1px -1px grey;
   font-size: 16px;
-  
+
   font-weight: 700;
   color: #fff;
   font-size: 12px;
   transform: rotate(-360deg);
   z-index: 100;
 }
+
 .player-coin.all {
   display: inline;
   transform: scale(.6) translateX(-30px);
@@ -977,7 +847,7 @@ body {
   z-index: 90;
 }
 
-.player-coin .player-avatar  {
+.player-coin .player-avatar {
   z-index: -1;
   opacity: .5;
 }
@@ -1003,9 +873,10 @@ body {
   color: rgb(239, 245, 239);
   cursor: pointer;
 }
+
 .empty-slot.active {
- 
- opacity: 1;
+
+  opacity: 1;
 }
 
 .empty-slot:hover {
@@ -1036,13 +907,14 @@ i {
   pointer-events: none;
 }
 
-.player-cards >span {
+.player-cards>span {
   position: absolute;
-   
-    top: -50px;
-    transition: 500ms;
+
+  top: -50px;
+  transition: 500ms;
 }
-.players.result-lose.result-bust{
+
+.players.result-lose.result-bust {
   opacity: .6;
   transform: scale(.8);
   transition: all 0.5s ease-in-out;
@@ -1075,12 +947,14 @@ i {
   margin-left: 40px;
   top: -176px;
 }
+
 .isdouble.card3 {
- 
+
   transform: rotate(-90deg) !important;
   transform-origin: bottom;
-  
+
 }
+
 .card4 {
   z-index: 4;
   margin-left: 60px;
@@ -1150,79 +1024,124 @@ i {
 
 #balance-bet-box {
   position: absolute;
-display: grid;
--apple-pay-button-type: 15px;
-color: white;
-text-align: center;
-border-radius: 10px;
-font-family: "Play", sans-serif;
--webkit-user-select: none;
-top:10px;
-right: 90px;
+  display: grid;
+  -apple-pay-button-type: 15px;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  font-family: "Play", sans-serif;
+
+  top: -50px;
+  right: 90px;
 }
 
 .balance-bet {
   background-color: rgba(0, 0, 0, 0.458);
   padding: 4px;
   border: 1px solid white;
-  width: 155px;
+  width: 215px;
   border-radius: 10px;
   margin-left: 10px;
   margin-bottom: 8px;
 }
+
 .balance-bet #total-bet {
   color: #e0e000;
 }
 
 #dealer {
   position: relative;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 100%;
+  width: 87%;
   font-family: "Play", sans-serif;
   -webkit-user-select: none;
-  /* Safari */
   -ms-user-select: none;
-  /* IE 10+ and Edge */
   user-select: none;
-  /* Standard syntax */
-  
+  top: -91%;
+
+}
+
+.betCards {
+  display: inline-block;
+  padding: 0 2px 0 2px;
+  margin-right: 2px;
+  text-align: center;
+  min-width: 30px;
+  line-height: 25px;
+  border-radius: 6px;
+  font-size: 16px;
 }
 
 #dealer .dealer-cards {
   margin: auto;
-    flex-direction: row;
-    position: absolute;
-    width: 18%;
-    transition: 500ms;
-    margin-top: 250px;
-    margin-left: 90px;
+  flex-direction: row;
+  position: absolute;
+  width: 276px;
+  transition: 500ms;
+  margin-top: 40px;
+  margin-left: 90px;
 }
-.percent{
-  margin-top:100px;
-  color:#fff;
+
+#betslist {
+  margin-top: 980px !important;
+  color: rgb(255, 255, 255);
+  height: 410px;
+  overflow: auto;
+  margin-left: 95px !important;
+  padding-right: 3560px;
+  box-sizing: content-box;
+}
+
+.last #betslist,
+#betslist.doing {
+  z-index: 20;
+
+}
+
+.betbox {
+  height: 82px;
+  margin-bottom: 10px;
+  line-height: 26px;
+  font-size: 18px;
+
+}
+
+.betbox img {
+  height: 40px;
+  margin-right: 10px;
+  float: left;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.percent {
+  margin-top: 100px;
+  color: #fff;
   font-size: 14px;
 }
-.lastwheel{
+
+.lastwheel {
   position: relative;
-    z-index: -1;
-    transform: scale(1.4);
-    transform-origin: top center;
-    height: 370px;
-    
-    left: 0;
-    right: 0;
-    top: -50px;
-    transition: all 4s ease;
+  z-index: -1;
+  transform: scale(1.4);
+  transform-origin: top center;
+  height: 370px;
+
+  left: 0;
+  right: 0;
+  top: -50px;
+  transition: all 4s ease;
 
 
 }
-.lastwheel > div{
- 
-width: 450px;
-margin: auto;
+
+.lastwheel>div {
+
+  width: 450px;
+  margin: auto;
 
 }
 
@@ -1232,28 +1151,32 @@ margin: auto;
   overflow: hidden;
   transform: rotate(45deg);
 }
-#wheelOfFortune canvas{
-  
-  transition:1s ease-in-out;
+
+#wheelOfFortune canvas {
+
+  transition: 1s ease-in-out;
 
 }
-#dospin{
+
+#dospin {
   transform-origin: 50% 50%;
-  transition-duration:1s ;
-  transition-timing-function: cubic-bezier(.14,-0.13,.04,1);
- 
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(.14, -0.13, .04, 1);
+
 
 }
-.frz{
-  transition-duration:0s !important;
+
+.frz {
+  transition-duration: 0s !important;
 }
-#dospin.dospin{
+
+#dospin.dospin {
   rotate: 10turn;
 }
 
 .roulette-table-container {
   position: relative;
-  background: #15202B;
+  background: #3a4744db;
   padding: 0 7px 7px 7px;
 }
 
@@ -1291,18 +1214,20 @@ margin: auto;
   border-top: none;
 }
 
-.lastwheel.Spin{
-  
+.lastwheel.Spin {
+
   transform: scale(1.6);
-  
+
 
 }
-.lastwheel.Done{
+
+.lastwheel.Done {
   opacity: .5;
 
 }
-.lastwheel  div.shadow {
- 
+
+.lastwheel div.shadow {
+
   position: fixed;
   left: -100%;
   right: -100%;
@@ -1313,51 +1238,60 @@ margin: auto;
   z-index: 100;
   opacity: 1;
   height: 285%;
-  
+
 }
-.lastwheel.Spin  div.shadow {
- 
-  
+
+.lastwheel.Spin div.shadow {
+
+
   top: 0;
-  
+
 }
 
 #dealer .visibleCards {
-  margin: 5px 3px;
+  margin: 0px 3px 3px 3px;
   position: relative;
   display: inline-block;
- padding: 3px 10px;
- min-width: 40px;
+  padding: 2px 10px;
+  min-width: 49px;
   text-align: center;
   border-radius: 10px;
-  font-size: 12px;
+  font-size: 21px;
 }
 
 #bets-container {
   position: absolute;
- 
-  top: 230px;
+
+  top: 300px;
   left: 65%;
   transform: translateX(-50%);
   display: grid;
   transition: all .5s ease;
   z-index: 5;
 }
-.curchip{
-  transform: scale(.9) translateX(-20px) !important;
+
+#betslist img {
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.443));
 }
-#bets-container.nochip{
-  filter: grayscale(100%) blur(5px);
+
+.curchip {
+  transform: scale(1.2) translateX(-20px) !important;
 }
+
+#bets-container.nochip {
+  filter: grayscale(50%);
+
+}
+
 #bets-container-right {
   position: absolute;
- 
+
   height: 230px;
   margin: 0 auto;
   bottom: 70px;
   left: 50%;
-  transform: scale(.6);
-  
+  transform: scale(.7);
+
   transform-origin: bottom right;
   display: grid;
   color: black;
@@ -1365,15 +1299,16 @@ margin: auto;
   justify-content: space-evenly;
   align-items: center;
 }
+
 #bets-container-left {
   position: absolute;
- 
+
   height: 230px;
   margin: 0 auto;
   bottom: 70px;
   left: 50%;
   transform: scale(.6) translate(-113px, 0px);
-  
+
   transform-origin: bottom left;
   display: grid;
   color: black;
@@ -1397,8 +1332,9 @@ margin: auto;
   font-weight: 700;
   font-family: "Oswald", sans-serif;
   font-size: 20px;
-  text-shadow: 0px 0px 1px black,0px 0px 2px black,0px 0px 3px black,0px 0px 4px black,0px 0px 5px black,0px 0px 6px black,0px 0px 7px black;
+  text-shadow: 0px 0px 1px black, 0px 0px 2px black, 0px 0px 3px black, 0px 0px 4px black, 0px 0px 5px black, 0px 0px 6px black, 0px 0px 7px black;
 }
+
 .all .betButtons {
   position: absolute;
   margin: auto;
@@ -1417,12 +1353,15 @@ margin: auto;
   font-size: 20px;
   text-shadow: 0px 0px 1px black;
 }
+
 .betButtons:hover {
   transform: scale(1.05);
 }
+
 .betButtons:active {
   transform: scale(1);
 }
+
 .betButtons.place {
   box-shadow: none;
   color: white;
@@ -1431,6 +1370,7 @@ margin: auto;
   font-size: 15px;
 
 }
+
 .countover {
   position: relative;
   margin: auto;
@@ -1442,10 +1382,11 @@ margin: auto;
 
   object-fit: contain;
   flex-shrink: 0;
- 
- 
-    height: 0;
+
+
+  height: 0;
 }
+
 .countover img {
   position: absolute;
   margin: auto;
@@ -1471,26 +1412,12 @@ margin: auto;
 }
 
 
-.tabl2 .betButtons{
-  filter: hue-rotate(45deg);
-}
-.tabl3 .betButtons{
-  filter: hue-rotate(90deg);
-}
-.tabl4 .betButtons{
-  filter: hue-rotate(180deg);
-}
+
 .content-img {
   height: 70px;
   margin-bottom: 30px;
 }
-#scale{
-  opacity: 0 !important;
-  transition: transform 0.4s  !important;
-}
-#scale[style]{
-  opacity: 1 !important;
-}
+
 .betButtons.place.winner {
   box-shadow: 0 0 10px rgb(9, 226, 27);
   color: chartreuse;
@@ -1499,6 +1426,7 @@ margin: auto;
   font-size: 15px;
 
 }
+
 #bets-container .max-clear {
   font-weight: 500;
   text-shadow: 0 0 transparent;
@@ -1509,11 +1437,13 @@ margin: auto;
   height: 30px;
   border: 1px solid black;
 }
+
 .betButtons#chip {
   background: rgba(0, 0, 0, 0.2);
   color: white;
-  font-size:20px
+  font-size: 20px
 }
+
 .betButtons#chip0 {
   background: url("/imgs/chips/Casino_Chip_Brown.svg") no-repeat;
   color: #fff;
@@ -1523,30 +1453,35 @@ margin: auto;
 .betButtons#chip1 {
   background: url("/imgs/chips/Casino_Chip_Purple.svg") no-repeat;
   color: #fff;
-  
+
 }
+
 .betButtons#chip2 {
   background: url("/imgs/chips/Casino_Chip_Orange.svg") no-repeat;
   color: #fff;
-  
+
 }
+
 .betButtons#chip3 {
   background: url("/imgs/chips/Casino_Chip_Red.svg") no-repeat;
   color: #fff;
 }
+
 .betButtons#chip4 {
   background: url("/imgs/chips/Casino_Chip_Blue.svg") no-repeat;
   color: #fff;
 }
+
 .betButtons#chip5 {
   background: url("/imgs/chips/Casino_Chip_Black.svg") no-repeat;
   color: #fff;
 }
 
-#bets-container > span{
+#bets-container>span {
   transform-origin: right center;
-  transform: scale(.8);
+  transform: scale(1);
   transition: all 0.2s ease-in-out;
+  margin-bottom: 10px;
 }
 
 .user-action-container {
@@ -1573,24 +1508,35 @@ margin: auto;
   /* Standard syntax */
   background: rgba(0, 0, 0, 0.7);
   border-radius: 15px;
-  
+
 }
+
 .user-action-container .user-action-text {
   pointer-events: none;
 }
-.nochip *{ pointer-events: none !important;}
+
+.nochip * {
+  pointer-events: none !important;
+}
+
+.nochip .item-hover {
+  background-color: transparent !important;
+}
+
 .user-action-container #your-turn-label {
   position: absolute;
   font-size: 14px;
   top: 12px;
   pointer-events: none;
 }
+
 .user-action-container .user-action-box {
   width: 120px;
   text-align: center;
   font-size: 14px;
 
 }
+
 .user-action-container .user-action {
   position: relative;
   font-size: 38px;
@@ -1603,23 +1549,29 @@ margin: auto;
   border: 2px solid black;
   cursor: pointer;
 }
+
 .user-action-container .user-action:hover {
   transform: scale(1.028);
   background-color: rgba(50, 50, 50, 0.5);
 }
+
 .user-action-container .user-action:active {
   transform: scale(1);
 }
+
 .user-action-container #stand {
   color: red;
 }
+
 .user-action-container #hit {
   color: green;
 }
+
 .user-action-container #doubleDown {
   position: relative;
   color: goldenrod;
 }
+
 .user-action-container #doubleDown span {
   position: absolute;
   left: 26px;
@@ -1659,10 +1611,12 @@ margin: auto;
   0% {
     background-color: rgba(255, 217, 0, 0.8);
   }
+
   50% {
     background-color: rgba(255, 217, 0, 0.5);
   }
 }
+
 .ready:hover {
   opacity: 0.5;
 }
@@ -1688,7 +1642,8 @@ margin: auto;
   transform-style: preserve-3d;
 }
 
-.flip-card-front, .flip-card-back {
+.flip-card-front,
+.flip-card-back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1704,8 +1659,9 @@ margin: auto;
   padding: 0;
   list-style: none;
   text-align: center;
-transform-origin: top;
+  transform-origin: top;
 }
+
 .tilesWrap li {
   display: inline-block;
   width: 40%;
@@ -1716,11 +1672,12 @@ transform-origin: top;
   margin: 10px;
   font-family: 'helvetica', san-serif;
   cursor: pointer !important;
-  
+
   background: #262a2b;
   border: 1px solid #252727;
   text-align: left;
 }
+
 .tilesWrap li h2 {
   font-size: 94px;
   margin: 0;
@@ -1730,6 +1687,7 @@ transform-origin: top;
   right: 10px;
   transition: all 0.3s ease-in-out;
 }
+
 .tilesWrap li h3 {
   font-size: 20px;
   color: #b7b7b7;
@@ -1737,12 +1695,14 @@ transform-origin: top;
   margin-top: 5px;
 
 }
+
 .tilesWrap li p {
   font-size: 14px;
   line-height: 18px;
   color: #b7b7b7;
   margin-top: 5px;
 }
+
 .tilesWrap li button {
   background: transparent;
   border: 1px solid #b7b7b7;
@@ -1756,6 +1716,7 @@ transform-origin: top;
   cursor: pointer;
   overflow: hidden;
 }
+
 .tilesWrap li button:before {
   content: '';
   position: absolute;
@@ -1768,19 +1729,23 @@ transform-origin: top;
   border-radius: 0 20px 20px 0;
   z-index: -1;
   transition: all 0.3s ease-in-out;
-  
+
 }
+
 .tilesWrap .li:hover button {
   transform: translateY(5px);
   opacity: 1;
 }
+
 .tilesWrap li button:hover {
   color: #262a2b;
 }
+
 .tilesWrap li button:hover:before {
   left: 0;
   opacity: 1;
 }
+
 .tilesWrap .li:hover h2 {
   top: 0px;
   opacity: 0.6;
@@ -1797,6 +1762,7 @@ transform-origin: top;
   background: #fff;
   transform: skew(2deg, 2deg);
 }
+
 .tilesWrap li:after {
   content: '';
   position: absolute;
@@ -1806,35 +1772,50 @@ transform-origin: top;
   top: 0;
   background: rgba(255, 255, 255, 0.02);
 }
+
 .tilesWrap li:nth-child(1):before {
   background: #C9FFBF;
-background: -webkit-linear-gradient(to right, #FFAFBD, #C9FFBF);
-background: linear-gradient(to right, #FFAFBD, #C9FFBF);
+  background: -webkit-linear-gradient(to right, #FFAFBD, #C9FFBF);
+  background: linear-gradient(to right, #FFAFBD, #C9FFBF);
 }
+
 .tilesWrap li:nth-child(2):before {
   background: #f2709c;
-background: -webkit-linear-gradient(to right, #ff9472, #f2709c);
-background: linear-gradient(to right, #ff9472, #f2709c);
+  background: -webkit-linear-gradient(to right, #ff9472, #f2709c);
+  background: linear-gradient(to right, #ff9472, #f2709c);
 }
+
 .tilesWrap li:nth-child(3):before {
   background: #c21500;
-background: -webkit-linear-gradient(to right, #ffc500, #c21500);
-background: linear-gradient(to right, #ffc500, #c21500);
+  background: -webkit-linear-gradient(to right, #ffc500, #c21500);
+  background: linear-gradient(to right, #ffc500, #c21500);
 }
+
 .tilesWrap li:nth-child(4):before {
   background: #FC354C;
-background: -webkit-linear-gradient(to right, #0ABFBC, #FC354C);
-background: linear-gradient(to right, #0ABFBC, #FC354C);
+  background: -webkit-linear-gradient(to right, #0ABFBC, #FC354C);
+  background: linear-gradient(to right, #0ABFBC, #FC354C);
 }
+
 @media only screen and (orientation:portrait) {
-  #turn { display:block; }
-  #root { display:none; }
+  #turn {
+    display: block;
+  }
+
+  #root {
+    display: none;
+  }
 }
 
 /* (B) CORRECT ORIENTATION - SHOW CONTENT HIDE MESSAGE */
 @media only screen and (orientation:landscape) {
-  #turn { display:none; }
-  #root { display:block; }
+  #turn {
+    display: none;
+  }
+
+  #root {
+    display: block;
+  }
 }
 
 .cardRotate {
@@ -1858,9 +1839,9 @@ background: linear-gradient(to right, #0ABFBC, #FC354C);
 
 
 .phone {
-position: relative;
-width: 30%; 
-margin: 35%;
+  position: relative;
+  width: 30%;
+  margin: 35%;
 }
 
 
@@ -1869,12 +1850,25 @@ margin: 35%;
 }
 
 @keyframes landscape {
-  0% { transform: rotate(0deg) }
-  50% { transform: rotate(90deg) }
-  100% { transform: rotate(90deg) }
+  0% {
+    transform: rotate(0deg)
+  }
+
+  50% {
+    transform: rotate(90deg)
+  }
+
+  100% {
+    transform: rotate(90deg)
+  }
 }
 
 @keyframes portrait {
-  0% { transform: rotate(90deg) }
-  100% { transform: rotate(0deg) }
+  0% {
+    transform: rotate(90deg)
+  }
+
+  100% {
+    transform: rotate(0deg)
+  }
 }

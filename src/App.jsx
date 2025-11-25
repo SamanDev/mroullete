@@ -7,7 +7,7 @@ import Loaderr from "./components/Loader";
 import TableBet from "./components/Table";
 import eventBus from "./eventBus";
 import UserWebsocket from "./user.websocket";
-
+import { Button } from "semantic-ui-react";
 
 
 let _auth = null;
@@ -28,8 +28,9 @@ _renge.push(_renge[1] * 5);
 _renge.push(_renge[1] * 10);
 _renge.push(_renge[1] * 20);
 //const WEB_URL = process.env.REACT_APP_MODE === "production" ? `wss://${process.env.REACT_APP_DOMAIN_NAME}/` : `ws://${loc.hostname}:8088`;
-const WEB_URL = `wss://mroullete.wheelofpersia.com/`;
-//const WEB_URL = `ws://${loc.hostname}:8092/`;
+//const WEB_URL = `wss://mroullete.wheelofpersia.com/`;
+//const WEB_URL = `ws://${loc.hostname}:8100/roullete`;
+const WEB_URL = `wss://server.wheelofpersia.com/roullete`;
 // (A) LOCK SCREEN ORIENTATION
 
 const segments = ["0", 26, 3, 35, 12, 28, 7, 29, 18, 22, 9, 31, 14, 20, 1, 33, 16, 24, "00", 5, 10, 23, 8, 30, 11, 36, 13, 27, 6, 34, 17, 25, 2, 21, 4, 19, 15, 32];
@@ -52,13 +53,38 @@ const allBets = {
 
 const getcolor = (item) => {
     let def = "green";
+    var itemStr = item.toString();
+    if (itemStr.indexOf("DOZEN") > -1 || itemStr.indexOf("COLUMN") > -1 || itemStr.indexOf("_TO_") > -1 || itemStr == "ODD" || itemStr == "EVEN") {
+        def = "#3a4744db";
+    } else {
+        if (REDSeg.includes(item) || REDSeg.includes(parseInt(item)) || itemStr == "RED") {
+            def = "red";
+        }
+        if (BLACKSeg.includes(item) || BLACKSeg.includes(parseInt(item)) || itemStr == "BLACK") {
+            def = "black";
+        }
+    }
 
-    if (REDSeg.includes(item)) {
-        def = "red";
+
+    return def;
+};
+const getbettext = (item) => {
+    let def = item;
+    var itemStr = item.toString();
+    if (itemStr.indexOf("DOZEN") > -1) {
+        var s = parseInt(itemStr[0]) * 12 - 11;
+        var e = parseInt(itemStr[0]) * 12;
+
+        def = s + "-" + e;
     }
-    if (BLACKSeg.includes(item)) {
-        def = "black";
+    if (itemStr.indexOf("COLUMN") > -1) {
+        def = itemStr.replace("_COLUMN", "").toLowerCase();
     }
+
+    if (itemStr.indexOf("_TO_") > -1) {
+        def = itemStr.replace("_TO_", " to ");
+    }
+
 
     return def;
 };
@@ -110,25 +136,66 @@ segments.map((item, i) => {
         color: getcolor(item),
     });
 });
+function useScale(rootId = "root", scaleId = "scale", gamesData, conn) {
 
+    useEffect(() => {
+
+        const doScale = () => {
+            try {
+                const root = document.getElementById(rootId);
+                const scaleEl = document.getElementById(scaleId);
+
+                if (!root || !scaleEl) return;
+                const gWidth = root.clientWidth / 1400;
+                const gHeight = root.clientHeight / 850;
+                let scale = Math.min(gWidth, gHeight);
+
+                if (scale > 1) scale = 1;
+                // center translation to keep proportions (approximate)
+
+
+
+                const target = 800 - gHeight;
+                let t = (800 - target) / 2;
+                scaleEl.style.transform = `scale(${scale}) translateY(${t}px)`;
+
+            } catch (e) {
+                // ignore
+            }
+        };
+        window.addEventListener("resize", doScale);
+        window.addEventListener("orientationchange", doScale);
+        // initial
+
+        setTimeout(doScale, 50);
+
+
+
+        return () => {
+            window.removeEventListener("resize", doScale);
+            window.removeEventListener("orientationchange", doScale);
+        };
+    }, [gamesData, conn]);
+
+}
 function animateNum() {
-    $(".counter").each(function () {
-        let $this = $(this),
-            countTo = $this.attr("data-count"),
-            countFrom = $this.attr("start-num") ? $this.attr("start-num") : parseInt($this.text().replace(/,/g, ""));
+    $('.counter').each(function () {
+        var $this = $(this),
+            countTo = $this.attr('data-count'),
+            countFrom = $this.attr('start-num') ? $this.attr('start-num') : parseInt($this.text().replace(/,/g, ""));
 
-        if (countTo != countFrom && !$this.hasClass("doing")) {
-            $this.attr("start-num", countFrom);
+        if (countTo != countFrom && !$this.hasClass('doing')) {
+            $this.attr('start-num', countFrom);
             // $this.addClass("doing");
 
-            $({ countNum: countFrom }).animate(
-                {
-                    countNum: countTo,
-                },
+            $({ countNum: countFrom }).animate({
+                countNum: countTo
+            },
 
                 {
-                    duration: 200,
-                    easing: "linear",
+
+                    duration: 400,
+                    easing: 'linear',
 
                     step: function () {
                         //$this.attr('start-num',Math.floor(this.countNum));
@@ -136,74 +203,38 @@ function animateNum() {
                     },
                     complete: function () {
                         $this.text(doCurrency(this.countNum));
-                        $this.attr("start-num", Math.floor(this.countNum));
+                        $this.attr('start-num', Math.floor(this.countNum));
                         //$this.removeClass("doing");
                         //alert('finished');
-                    },
-                }
-            );
+                    }
+
+                });
+
+
         } else {
-            if ($this.hasClass("doing")) {
-                $this.attr("start-num", countFrom);
+            if ($this.hasClass('doing')) {
+                $this.attr('start-num', countFrom);
                 $this.removeClass("doing");
             } else {
-                $this.attr("start-num", countFrom);
+                $this.attr('start-num', countFrom);
             }
         }
     });
 }
-const AppOrtion = () => {
-    if (!$("#scale").attr("style")) {
-        let maxWidth = 1400,
-            maxHeight = 750;
-        //console.log($("#root").width(),$("#root").height());
-        // console.log(gWidth,gHight,scale);
-        let scale,
-            width = $("#root").width(),
-            height = $("#root").height(),
-            isMax = width >= maxWidth && height >= maxHeight;
 
-        scale = Math.min(width / maxWidth, height / maxHeight);
-        let highProtect = ($("#root").height() * height) / maxHeight;
 
-        let _t = 0;
-        if (_t < 0) {
-            //_t = _t * -1;
-        }
 
-        if (isMax) {
-            $("#scale").css("transform", "scale(1)");
-        } else {
-            $("#scale").css("transform", "scale(" + scale + ")");
-        }
-    }
-
-    // console.log(gWidth,highProtect,gHight,scale)
-};
-
-let supportsOrientationChange = "onorientationchange" in window,
-    orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
-var sizeBln;
-window.addEventListener(
-    orientationEvent,
-    function () {
-        clearTimeout(sizeBln);
-        sizeBln = setTimeout(() => {
-            $("#scale").removeAttr("style");
-            AppOrtion();
-        }, 500);
-    },
-    false
-);
 window.parent.postMessage("userget", "*");
 
-if (window.self == window.top) {
-    window.location.href = "https://www.google.com/";
+if (window.self === window.top && WEB_URL.indexOf("localhost") == -1) {
+    // window.location.href = "https://www.google.com/";
 }
 let timerRunningOut = new Howl({
     src: ["/sounds/timer_running_out.mp3"],
     volume: 0.5,
+    rate: 0.4
 });
+
 
 // let youWin = new Howl({
 //   src: ['/sounds/you_win.mp3']
@@ -218,10 +249,13 @@ const Main = () => {
     return (
         <div>
             <div className={"game-room"} id="scale">
-                <BlackjackGame setChip={setChip} chip={chip} />
-                <WheelContectNew />
+                <div className="fix">
+                    
+                    <WheelContectNew />
 
-                <TableContect chip={chip} />
+                    <TableContect chip={chip} />
+                    <BlackjackGame setChip={setChip} chip={chip} />
+                </div>
             </div>
         </div>
     );
@@ -232,13 +266,13 @@ const BlackjackGame = (prop) => {
     const [lasts, setLasts] = useState([]);
     const [gameData, setGameData] = useState({ status: "" }); // Baraye zakhire JSON object
     const [last, setLast] = useState(false);
-    const [conn, setConn] = useState(true);
+    const [conn, setConn] = useState(false);
     const [gameId, setGameId] = useState("Roulette01");
     const [userData, setUserData] = useState(null);
     const [gameTimer, setGameTimer] = useState(-1);
     const [listBets, setListBets] = useState([]);
     const [gameDataLive, setGameDataLive] = useState(null);
-
+    useScale("root", "scale", gamesData, conn);
     useEffect(() => {
         eventBus.on("tables", (data) => {
             setGamesData(data.games);
@@ -250,15 +284,24 @@ const BlackjackGame = (prop) => {
         });
 
         eventBus.on("timer", (data) => {
-            setGameTimer(data.sec);
-            if (data.sec == 5) {
+            if (data.sec <= 9) {
+                setLast(false);
+                localStorage.removeItem(String(gameId))
+
+            }
+            if (data.sec === 10) {
+                timerRunningOut.fade(0, 0.5, 2000);
                 timerRunningOut.play();
             }
-            if (data.sec == 2) {
-                setLast(false);
+            if (data.sec == 3) {
+
+                timerRunningOut.fade(0.5, 0, 4000);
             }
+            setGameTimer(data.sec);
+
         });
         eventBus.on("connect", (data) => {
+            setConn(true);
             if (data.theClient?.balance >= 0) {
                 setUserData(data.theClient);
             } else {
@@ -290,14 +333,17 @@ const BlackjackGame = (prop) => {
     }, [gamesData]);
     useEffect(() => {
         if (last) {
-            $("body").css("background", "radial-gradient(#000000, #262a2b)");
+            $("body").css("background", "rgb(16 67 67)").addClass('last');
+
             $(".chip.org").remove();
         } else {
-            $("body").css("background", "radial-gradient(#833838, #421e1e)");
+            $("body").css("background", "rgb(96 6 71)").removeAttr("class");
             $(".chip.lst").remove();
         }
     }, [last]);
     useEffect(() => {
+
+
         if (gameData?.status == "End") {
             for (const [key, value] of Object.entries(allBets)) {
                 if (value.includes("" + segments[gameData.number] + "") || value.includes(segments[gameData.number])) {
@@ -307,17 +353,26 @@ const BlackjackGame = (prop) => {
 
             $("[data-bet=" + segments[gameData?.number] + "]").addClass("item-selected-num");
             $('[data-bet="' + segments[gameData?.number] + '"]').addClass("item-selected-num");
+
         } else {
             $(".item-selected-num").removeClass("item-selected-num");
 
             $(".item-selected").removeClass("item-selected");
+
         }
         if (gameData?.status == "Spin") {
+
             //setLast(false);
+            $(".roulette-table-container").addClass("noclick-nohide");
             $(".lastwheel").addClass("Spin");
         } else {
             $(".lastwheel").removeClass("Spin");
             $("[data-bet]").removeClass("noclick-nohide");
+
+        }
+        if (gameData?.status == "Done") {
+
+            $(".roulette-table-container").removeClass("noclick-nohide");
         }
 
         $("#betslist:not(.doing)")
@@ -325,7 +380,7 @@ const BlackjackGame = (prop) => {
             .delay(2000)
             .animate(
                 {
-                    scrollTop: $("#betslist > div").height() - $("#betslist").height(),
+                    scrollTop: 1000,
                 },
                 6000,
                 function () {
@@ -343,7 +398,7 @@ const BlackjackGame = (prop) => {
                 }
             );
 
-        AppOrtion();
+
     }, [gameData?.status]);
     useEffect(() => {
         if (last && gameDataLive?.status == "Done") {
@@ -358,11 +413,12 @@ const BlackjackGame = (prop) => {
         }
         setTimeout(() => {
             animateNum();
-            AppOrtion();
+
         }, 100);
     }, [last, gameDataLive]);
 
     useEffect(() => {
+
         if (gameData?.players) {
             if (gameData?.status == "End") {
                 setListBets(gameData?.players.sort((a, b) => (a.win > b.win ? -1 : 1)));
@@ -407,6 +463,7 @@ const BlackjackGame = (prop) => {
                     }
                 } else {
                     $(".roulette-table-container").removeClass("noclick-nohide");
+
                     let modecls = "org";
                     if (last) {
                         modecls = "lst";
@@ -447,11 +504,11 @@ const BlackjackGame = (prop) => {
                 }
             });
         }
-    }, [gameData]);
+    }, [gameData?.players]);
 
     // Agar gaData nist, ye matn "Loading" neshan bede
 
-    if (_auth == null || !conn || !gamesData || !gameData || !userData || lasts.length == 0) {
+    if (!conn || !gamesData || !gameData || !userData || lasts.length == 0) {
         return <Loaderr errcon={!gamesData || !gameData || !userData || lasts.length == 0 ? false : true} />;
     }
     let _countBet = 0;
@@ -464,27 +521,32 @@ const BlackjackGame = (prop) => {
         _totalBetAll = _totalBetAll + player.amount;
         _totalWinAll = _totalWinAll + player.win;
         if (player.nickname == userData.nickname) {
+
             _countBet = _countBet + 1;
             _totalBet = _totalBet + player.amount;
             _totalWin = _totalWin + player.win;
         }
     });
+    if (_totalBet > 0 && gameDataLive.status != "Done") {
+        let lastbet = gameData.players.filter((bet) => bet.nickname == userData.nickname);
+        if (lastbet.length) { localStorage.setItem(gameId + "bet" + userData.nickname, JSON.stringify(lastbet)) }
 
+    }
     return (
         <>
             <Info setGameId={setGameId} gameId={gameId} totalBetAll={_totalBetAll} totalWinAll={_totalWinAll} />
             <div id="balance-bet-box">
                 <div className="balance-bet">
                     Balance
-                    <div id="balance" className="counter" data-count={userData.balance}></div>
+                    <div id="balance" className="counter" data-count={userData.balance}>{doCurrency(userData.balance)}</div>
                 </div>
                 <div className="balance-bet">
                     Yout Bets
-                    <div id="total-bet" className="counter" data-count={_totalBet}></div>
+                    <div id="total-bet" className="counter" data-count={_totalBet}>0</div>
                 </div>
                 <div className="balance-bet">
                     Your Wins
-                    <div id="total-bet" className="counter" data-count={_totalWin}></div>
+                    <div id="total-bet" className="counter" data-count={_totalWin}>0</div>
                 </div>
                 {localStorage.getItem(gameId) && gameDataLive.status == "Done" && gameTimer > 2 && (
                     <div
@@ -496,7 +558,7 @@ const BlackjackGame = (prop) => {
                             setLast(false);
                         }}
                     >
-                        Show Last Hand
+                        Show Last Game
                     </div>
                 )}
 
@@ -543,7 +605,7 @@ const BlackjackGame = (prop) => {
                 {lasts.length > 0 && (
                     <div className="dealer-cards">
                         {lasts.map(function (x, i) {
-                            if (i < 50) {
+                            if (i < 20) {
                                 let card = segments[x];
                                 return (
                                     <div className="visibleCards animate__fadeIn animate__animated" key={i} style={{ animationDelay: (i + 1) * 90 + "ms", background: getcolor(card), color: getcolortext(card) }}>
@@ -555,32 +617,53 @@ const BlackjackGame = (prop) => {
                     </div>
                 )}
                 {gameData.players.length > 0 && (
-                    <div className="dealer-cards" id="betslist" style={{ marginTop: 1000, color: "#fff", height: 300, overflow: "auto" }}>
+                    <div className="dealer-cards" id="betslist">
                         <div>
                             {listBets.map(function (x, i) {
                                 if (i < 500) {
-                                    let card = x.betId.id;
+                                    let card = x.betId.payload;
+                                    let mode = x.betId.id;
                                     return (
-                                        <div className={" "} style={{ height: 50, marginBottom: 10, lineHeight: "13px", fontSize: 13 }} key={i}>
-                                            <img src={"/imgs/avatars/" + x?.avatar + ".webp"} style={{ height: 40, marginRight: 10, float: "left" }} />
+                                        <div className={x.win == 0 && gameData.status == "End" ? "result-lose betbox  animate__fadeIn animate__animated" : "betbox  animate__fadeIn animate__animated"} key={i}>
+                                            <img src={"/imgs/avatars/" + x?.avatar + ".webp"} />
                                             {x.nickname}
-                                            <br />
-                                            <small className={x.win == 0 && gameData.status == "End" ? "animate__fadeIn animate__animated result-lose" : x.win > 0 && gameData.status == "End" ? " result-win animate__fadeIn animate__animated" : "animate__fadeIn animate__animated"}>
-                                                {doCurrencyMil(x.amount)} on {card}
+                                            <div className={x.win == 0 && gameData.status == "End" ? "result-lose" : x.win > 0 && gameData.status == "End" ? "result-win" : ""}>
+
+
                                                 {x.win > 0 ? (
                                                     <>
-                                                        <br />x{x.x} - {doCurrencyMil(x.win)}
+                                                        {doCurrencyMil(x.amount)} x{36 / x.betId.payload.length} +{doCurrencyMil(x.win)}
                                                     </>
                                                 ) : (
                                                     <>
-                                                        <br />x{36 / x.betId.payload.length}{" "}
+                                                        {doCurrencyMil(x.amount)} x{36 / x.betId.payload.length}
                                                     </>
                                                 )}
-                                            </small>
+                                            </div>
+                                            <div>
+                                                {card.length < 7 ? (
+                                                    <>
+                                                        {card.map(function (x, i) {
+                                                            if (i < 6) {
+                                                                let card = x;
+                                                                return (
+                                                                    <span className="betCards" key={i} style={{ background: getcolor(x), color: getcolortext(x) }}>{card}</span>
+                                                                );
+                                                            }
+                                                        })}
+
+
+                                                    </>
+                                                ) : (
+                                                    <><span className="betCards" style={{ background: getcolor(mode), color: getcolortext(mode) }}>{getbettext(mode)}</span></>
+                                                )}
+                                            </div>
+
                                         </div>
                                     );
                                 }
                             })}
+
                         </div>
                     </div>
                 )}
@@ -596,10 +679,10 @@ const WheelContectNew = () => {
 
     const [gameTimer, setGameTimer] = useState(-1);
     const [timer, setTimer] = useState(5);
-    
+
     const initGame = (num, rot) => {
-      //  console.log(initTime);
-        
+        //  console.log(initTime);
+
 
         clearTimeout(initTime);
         if (document.getElementsByTagName("canvas")[0]) {
@@ -610,7 +693,7 @@ const WheelContectNew = () => {
 
                 $("#dospin").removeClass("frz").addClass("dospin");
                 $("canvas").removeClass("frz");
-         
+
             }
             if (!$("canvas").hasClass("drowed")) {
                 $("canvas").addClass("drowed");
@@ -646,26 +729,27 @@ const WheelContectNew = () => {
                     ctx.restore();
                 }
                 sectors.forEach(drawSector);
-                
+
                 rot = true;
             }
             const defnum = num;
             function rotate() {
+
                 const mydeg = tot * 28 + Math.floor((Math.random() * tot) / 1.5);
                 //console.log(tot * 28, defnum);
 
                 ctx.canvas.style.transform = `rotate(${mydeg - defnum * tot}deg)`;
             }
-           // console.log(num, rot);
-            if (rot)rotate();
-            
+            // console.log(num, rot);
+            if (rot) rotate();
+
         } else {
             initTime = setTimeout(() => {
                 initGame(num, rot);
-            }, 400);
+            }, 200);
         }
     };
-   
+
     useEffect(() => {
         eventBus.on("tables", (data) => {
             setGamesData(data.games[0]);
@@ -677,12 +761,15 @@ const WheelContectNew = () => {
         });
     }, []);
     useEffect(() => {
-        
+
         if (gamesData?.status) {
             //console.log(gamesData);
 
             if (gamesData.status == "Spin") {
+
+
                 if (timer != 15) {
+
                     setTimer(gamesData.startTimer);
                 }
 
@@ -695,23 +782,26 @@ const WheelContectNew = () => {
                 //const newPrizeNumber = Math.floor(Math.random() * _l.length);
             } else {
                 setTimer(15);
+
+
                 $(".lastwheel").removeClass("Spin");
-               
+
                 $("#dospin").addClass("frz").removeClass("dospin");
                 $("canvas").addClass("frz");
-                initGame(gamesData.number,false);
+                initGame(gamesData.number, false);
             }
         }
     }, [gamesData.status]);
     //console.log(mustSpin, prizeNumber, startNum, gameTimer);
-    if (gamesData?.number <0|| timer == 5) {
-        return <Loaderr />;
+   if (!gamesData?.status) {
+        return <></>;
     }
+
     return (
         <>
             <div className={"lastwheel"}>
                 <div>
-                    <div className="shadow"></div>
+
                     <div className="countover">
                         <img src="/imgs/cadr2.png" id="cadr" />
                         <img src="/imgs/cadr4.png" id="cadr2" style={{ display: "none" }} />
@@ -758,7 +848,7 @@ const TableContect = (prop) => {
                 // setConn(false);
                 //_auth = null;
             }
-     
+
         });
         eventBus.on("close", () => {
             setGamesData([]);
@@ -766,16 +856,26 @@ const TableContect = (prop) => {
     }, []);
 
     if (!gamesData?.status) {
-        return <Loaderr />;
+        return <></>;
     }
-    const handleBets = (data) => {
-        if (!gamesData.gameOn && gameTimer >= 0 && checkBets(data, userData.nickname)) {
-            // $("[data-bet=" + data.bet + "]").addClass("noclick-nohide");
+    const reBets = () => {
+        var data = JSON.parse(localStorage.getItem(gamesData.id + "bet" + userData.nickname))
+        data.forEach((bet, i) => {
+            setTimeout(() => {
+                handleBets(bet.betId, bet.amount)
+            }, 500 * i);
 
-            $(".roulette-table-container").addClass("noclick-nohide");
+        });
+        localStorage.removeItem(gamesData.id + "bet" + userData.nickname)
+    };
+    const handleBets = (data, amount) => {
+        if (!gamesData.gameOn && gameTimer >= 0 && checkBets(data, userData.nickname)) {
+            $("[data-bet=" + data.bet + "]").addClass("noclick-nohide");
+            var newAm = amount ? amount : chip * 1000
+            //$(".roulette-table-container").addClass("noclick-nohide");
 
             //console.log(JSON.stringify({ method: "bet", amount: chip * 1000, theClient: userData, gameId: gamesData.id, bet: data }));
-            UserWebsocket.connect(JSON.stringify({ method: "bet", amount: chip * 1000, theClient: userData, gameId: gamesData.id, bet: data }));
+            UserWebsocket.connect(JSON.stringify({ method: "bet", amount: newAm, theClient: userData, gameId: gamesData.id, bet: data }));
         }
     };
     const checkBets = (seat, username) => {
@@ -790,7 +890,17 @@ const TableContect = (prop) => {
 
     return (
         <>
-            <div className={chip * 1000 > userData.balance || gamesData.status == "Spin" ? "nochip bettable" : "bettable"}>
+            {(localStorage.getItem(gamesData.id + "bet" + userData.nickname) && gamesData.status == "Done") && (
+
+                <div id="deal-start-label" style={{ zIndex: 30, marginTop: -100 }}>
+                    <Button color="red" size="huge" onClick={() => reBets()} className="animate__bounceIn animate__animated " >
+                        ReBet
+                    </Button>
+                </div>
+            )
+
+            }
+            <div className={chip * 1000 > userData.balance || gamesData.status != "Done" ? "nochip bettable " + gamesData.status : "bettable"}>
                 <TableBet handleBets={handleBets} />
             </div>
         </>
@@ -807,7 +917,7 @@ window.addEventListener("message", function (event) {
         try {
             UserWebsocket.connect(JSON.stringify(payLoad));
             //socket.send(JSON.stringify(payLoad));
-        } catch (error) {}
+        } catch (error) { }
     }
 });
 

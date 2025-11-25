@@ -2,8 +2,8 @@ import React from "react";
 import { Dimmer, Loader, Icon, IconGroup, Segment } from "semantic-ui-react";
 
 const LoaderExampleLoader = (prop) => (
-    <div  className="myloading">
-        <Dimmer active>
+   
+        <Dimmer active className="myloading">
             {prop.errcon ? (
                 <>
                     <IconGroup size="huge" style={{ marginTop: "10%" }}>
@@ -20,7 +20,7 @@ const LoaderExampleLoader = (prop) => (
                 <Loader size="huge" />
             )}
         </Dimmer>
-    </div>
+ 
 );
 
 export default LoaderExampleLoader;

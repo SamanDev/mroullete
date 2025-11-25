@@ -31,11 +31,13 @@ class UserWebsocket {
                         };
                         try {
                             ws.send(JSON.stringify(payLoad));
-                        } catch (error) {}
+                        } catch (error) {
+                            clearInterval(timerId);
+                        }
                     } catch (error) {
                         clearInterval(timerId);
                     }
-                }, 10000);
+                }, 15000);
                 console.log("WebSocket connected");
                 // console.log("Socket is connected.");
             };
@@ -52,10 +54,12 @@ class UserWebsocket {
             
             // Event onclose baraye vaghti ke websocket baste mishe
             ws.onclose = () => {
+                clearInterval(timerId);
                 eventBus.dispatch("close");
             };
           
             ws.onerror = function () {
+                clearInterval(timerId);
                 eventBus.dispatch("close");
             };
         } else {
