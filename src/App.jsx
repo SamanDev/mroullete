@@ -75,7 +75,7 @@ const getbettext = (item) => {
         var s = parseInt(itemStr[0]) * 12 - 11;
         var e = parseInt(itemStr[0]) * 12;
 
-        def = s + "-" + e;
+        def = s + " to " + e;
     }
     if (itemStr.indexOf("COLUMN") > -1) {
         def = itemStr.replace("_COLUMN", "").toLowerCase();
