@@ -18,8 +18,7 @@ if (pathArr.length == 3) {
     _auth = pathArr[1] + "___" + pathArr[2];
 }
 
-//_auth = "farshad-HangOver2";
-//console.log(_auth);
+
 let _renge = [25];
 _renge.push(_renge[0] * 2);
 
@@ -27,11 +26,10 @@ _renge.push(_renge[1] * 2);
 _renge.push(_renge[1] * 5);
 _renge.push(_renge[1] * 10);
 _renge.push(_renge[1] * 20);
-//const WEB_URL = process.env.REACT_APP_MODE === "production" ? `wss://${process.env.REACT_APP_DOMAIN_NAME}/` : `ws://${loc.hostname}:8088`;
-//const WEB_URL = `wss://mroullete.wheelofpersia.com/`;
+
 //const WEB_URL = `ws://${loc.hostname}:8100/roullete`;
 const WEB_URL = `wss://server.wheelofpersia.com/roullete`;
-// (A) LOCK SCREEN ORIENTATION
+
 
 const segments = ["0", 26, 3, 35, 12, 28, 7, 29, 18, 22, 9, 31, 14, 20, 1, 33, 16, 24, "00", 5, 10, 23, 8, 30, 11, 36, 13, 27, 6, 34, 17, 25, 2, 21, 4, 19, 15, 32];
 const REDSeg = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
@@ -227,7 +225,7 @@ function animateNum() {
 window.parent.postMessage("userget", "*");
 
 if (window.self === window.top && WEB_URL.indexOf("localhost") == -1) {
-    // window.location.href = "https://www.google.com/";
+     window.location.href = "https://www.google.com/";
 }
 let timerRunningOut = new Howl({
     src: ["/sounds/timer_running_out.mp3"],
@@ -890,7 +888,7 @@ const TableContect = (prop) => {
 
     return (
         <>
-            {(localStorage.getItem(gamesData.id + "bet" + userData.nickname) && gamesData.status == "Done") && (
+            {(localStorage.getItem(gamesData.id + "bet" + userData.nickname) && gamesData.status == "Done" &&  userData.balance>0) && (
 
                 <div id="deal-start-label" style={{ zIndex: 30, marginTop: -100 }}>
                     <Button color="red" size="huge" onClick={() => reBets()} className="animate__bounceIn animate__animated " >
